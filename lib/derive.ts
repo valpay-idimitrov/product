@@ -96,6 +96,9 @@ export interface DerivedItem extends Item {
   areaBadge: string;
   areaHover: string;
   areaWritten: string;
+  areaSoft: string;
+  areaGrad: string;
+  barRight: string;
   priorityColor: string;
   groupCode: string;
   groupTier: string;
@@ -131,6 +134,8 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     areaBadge: hexRgba(areaColor, 0.12),
     areaHover: hexRgba(areaColor, 0.14),
     areaWritten: hexRgba(areaColor, 0.38),
+    areaSoft: `color-mix(in srgb, ${areaColor} 9%, #ffffff)`,
+    areaGrad: `linear-gradient(90deg, ${areaColor}, color-mix(in srgb, ${areaColor} 86%, #ffffff))`,
     priorityColor: PRIORITY_COLOR[it.priority] ?? areaColor,
     groupCode: (it.group ?? '').toUpperCase(),
     groupTier: GROUP_TIER[it.group] ?? 'Later',
@@ -138,6 +143,7 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     // 7px inset each side keeps adjacent bars from touching the month gridlines.
     barLeft: `calc(${left}% + 7px)`,
     barWidth: `calc(${width}% - 14px)`,
+    barRight: `calc(${left + width}% - 7px)`,
     effortPct: `${est ? parseFloat(est.effort) || 0 : 0}%`,
     deliveredPct: `${est ? parseFloat(est.delivered) || 0 : 0}%`,
     jiraUrl: `https://valpay.atlassian.net/browse/${it.jira}`,

@@ -2,8 +2,11 @@
 
 import { useLayoutEffect, useRef, useState } from 'react';
 import DetailPanel from './DetailPanel';
-import DoneBadge from './DoneBadge';
+import ShippedBadge from './ShippedBadge';
 import type { DerivedItem } from '@/lib/derive';
+
+const SNAP = 'cubic-bezier(.22,1,.36,1)';
+const MONO = 'var(--font-mono)';
 
 export default function TimelineRow({
   item,
@@ -22,10 +25,11 @@ export default function TimelineRow({
 }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
+  const [hover, setHover] = useState(false);
 
   /**
-   * The panel stays mounted so it can animate closed as well as open, and its
-   * height is measured rather than guessed — a hard-coded max-height clips the
+   * The panel stays mounted so it animates closed as well as open, and its
+   * height is measured rather than assumed — a fixed max-height clips the
    * taller rows (VP-605 alone runs past 1200px).
    */
   useLayoutEffect(() => {
@@ -40,10 +44,13 @@ export default function TimelineRow({
 
   return (
     <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       style={{
         borderTop: '1px solid var(--row-border)',
+        background: hover ? 'rgba(128,128,128,0.04)' : 'transparent',
         opacity: dimmed ? 0.6 : 1,
-        transition: 'background .18s var(--ease-snap), opacity .26s var(--ease-snap)',
+        transition: `background .18s ${SNAP}, opacity .26s ${SNAP}`,
       }}
     >
       <div
@@ -65,7 +72,7 @@ export default function TimelineRow({
           minHeight: 66,
           padding: '3px 0',
           cursor: 'pointer',
-          animation: 'rowIn .34s var(--ease-snap) both',
+          animation: `rowIn .34s ${SNAP} both`,
           animationDelay: `${delay}ms`,
         }}
       >
@@ -82,28 +89,33 @@ export default function TimelineRow({
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 11, minWidth: 0 }}>
-            <span
-              title={item.groupTitle}
-              style={{
-                flex: '0 0 auto',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 26,
-                height: 16,
-                lineHeight: 1,
-                borderRadius: 2,
-                fontFamily: 'var(--font-mono)',
-                fontSize: 9,
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: 0.6,
-                whiteSpace: 'nowrap',
-                background: item.areaBadge,
-                color: item.areaTextColor,
-              }}
-            >
-              {item.groupCode}
+            {/* Relative wrapper hosts the shipped badge on the code's corner. */}
+            <span style={{ position: 'relative', flex: '0 0 auto', display: 'inline-flex' }}>
+              <span
+                title={item.groupTitle}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 26,
+                  height: 16,
+                  lineHeight: 1,
+                  borderRadius: 2,
+                  fontFamily: MONO,
+                  fontSize: 9,
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: 0.6,
+                  whiteSpace: 'nowrap',
+                  background: item.areaBadge,
+                  color: item.areaTextColor,
+                }}
+              >
+                {item.groupCode}
+              </span>
+              {item.showCheck && (
+                <ShippedBadge size={14} stroke={2.4} style={{ position: 'absolute', top: -6, right: -6, zIndex: 4 }} />
+              )}
             </span>
 
             <div style={{ flex: '1 1 auto', minWidth: 0, display: 'flex', alignItems: 'baseline', gap: 6 }}>
@@ -138,8 +150,6 @@ export default function TimelineRow({
                 </span>
               )}
             </div>
-
-            {item.showCheck && <DoneBadge />}
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 37, minWidth: 0 }}>
@@ -169,11 +179,26 @@ export default function TimelineRow({
             >
               {item.priority}
             </span>
+            {item.note && (
+              <span
+                title={item.note}
+                style={{
+                  fontSize: 9.5,
+                  lineHeight: '14px',
+                  fontStyle: 'italic',
+                  color: 'var(--txt-faint)',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {item.note}
+              </span>
+            )}
           </div>
         </div>
 
         <div style={{ position: 'relative', minHeight: 62 }}>
-          {/* Month gridlines */}
           {Array.from({ length: months - 1 }, (_, k) => (
             <div
               key={k}
@@ -182,7 +207,9 @@ export default function TimelineRow({
                 top: 0,
                 bottom: 0,
                 width: 1,
+                transform: 'translateX(-0.5px)',
                 background: 'var(--grid-col)',
+                zIndex: 0,
                 left: `${((k + 1) * 100) / months}%`,
               }}
             />
@@ -198,42 +225,36 @@ export default function TimelineRow({
               width: item.barWidth,
               borderRadius: 4,
               overflow: 'hidden',
+              zIndex: 1,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              background: `color-mix(in srgb, ${item.areaColor} 9%, #ffffff)`,
+              background: item.areaSoft,
               boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
             }}
           >
+            {/* Single gradient fill with a slow shimmer sweep over it. */}
             <div
               style={{
                 position: 'absolute',
-                inset: '0 auto 0 0',
+                top: 0,
+                left: 0,
+                bottom: 0,
                 width: `${item.progress}%`,
-                background: `repeating-linear-gradient(135deg, color-mix(in srgb, ${item.areaColor} 34%, #ffffff) 0 5px, color-mix(in srgb, ${item.areaColor} 16%, #ffffff) 5px 10px)`,
+                background: item.areaGrad,
               }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                inset: '0 auto 0 0',
-                width: item.deliveredPct,
-                background: item.areaColor,
-              }}
-            />
-            {item.progress > 0 && (
+            >
               <div
                 style={{
                   position: 'absolute',
-                  top: 0,
-                  bottom: 0,
-                  width: 2,
-                  background: item.areaTextColor,
-                  left: `${item.progress}%`,
-                  transform: 'translateX(-2px)',
+                  inset: 0,
+                  background:
+                    'linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%)',
+                  backgroundSize: '220% 100%',
+                  animation: 'shimmer 7s ease-in-out infinite',
                 }}
               />
-            )}
+            </div>
 
             <span
               style={{
@@ -241,12 +262,12 @@ export default function TimelineRow({
                 margin: '0 4px',
                 padding: '2px 7px',
                 borderRadius: 3,
-                fontFamily: 'var(--font-mono)',
+                fontFamily: MONO,
                 fontSize: 10,
                 fontWeight: 700,
                 letterSpacing: 0.3,
                 whiteSpace: 'nowrap',
-                color: '#ffffff',
+                color: '#fff',
                 background: item.areaTextColor,
               }}
             >
@@ -260,7 +281,7 @@ export default function TimelineRow({
                 borderRadius: 3,
                 background: '#ffffff',
                 boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
-                fontFamily: 'var(--font-mono)',
+                fontFamily: MONO,
                 fontSize: 9,
                 fontWeight: 700,
                 textTransform: 'uppercase',
@@ -272,6 +293,20 @@ export default function TimelineRow({
               {item.dateLabel}
             </span>
           </div>
+
+          {item.showCheck && (
+            <ShippedBadge
+              size={16}
+              stroke={2.2}
+              style={{
+                position: 'absolute',
+                top: 'calc(50% - 19px)',
+                left: item.barRight,
+                transform: 'translateX(-50%)',
+                zIndex: 4,
+              }}
+            />
+          )}
         </div>
       </div>
 
@@ -279,7 +314,7 @@ export default function TimelineRow({
         style={{
           maxHeight: expanded ? height : 0,
           overflow: 'hidden',
-          transition: 'max-height .44s var(--ease-snap)',
+          transition: `max-height .44s ${SNAP}`,
         }}
       >
         <div ref={contentRef} style={{ paddingBottom: 18 }}>

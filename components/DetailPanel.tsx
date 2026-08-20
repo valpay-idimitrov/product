@@ -7,8 +7,15 @@ const PRETTY = { textWrap: 'pretty' } as React.CSSProperties;
 
 const GRID = 'var(--panel-grid)';
 
-export default function DetailPanel({ item }: { item: DerivedItem }) {
+export default function DetailPanel({
+  item,
+  expanded,
+}: {
+  item: DerivedItem;
+  expanded: boolean;
+}) {
   const est = item.estimates;
+  const hasGroups = item.derivedGroups.length > 0;
 
   return (
     <div
@@ -18,6 +25,10 @@ export default function DetailPanel({ item }: { item: DerivedItem }) {
         background: '#ffffff',
         boxShadow: 'var(--shadow-md)',
         overflow: 'hidden',
+        opacity: expanded ? 1 : 0,
+        transform: expanded ? 'translateY(0)' : 'translateY(-6px)',
+        transition:
+          'opacity .3s cubic-bezier(.22,1,.36,1) .06s, transform .34s cubic-bezier(.22,1,.36,1) .06s',
       }}
     >
       {est && (
@@ -145,7 +156,7 @@ export default function DetailPanel({ item }: { item: DerivedItem }) {
         </>
       )}
 
-      {item.derivedGroups.length > 0 && (
+      {hasGroups && (
         <>
           <div
             style={{
@@ -362,6 +373,22 @@ export default function DetailPanel({ item }: { item: DerivedItem }) {
             ))}
           </div>
         </>
+      )}
+
+      {!hasGroups && (
+        <div
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 9,
+            textTransform: 'uppercase',
+            letterSpacing: 1,
+            color: 'var(--txt-faint)',
+            padding: '14px 24px 16px',
+            borderTop: est ? '1px solid rgba(23,33,74,.06)' : 'none',
+          }}
+        >
+          No linked Jira issues yet
+        </div>
       )}
     </div>
   );

@@ -319,7 +319,7 @@ export default function TimelineRow({
       >
         <div ref={contentRef} style={{ paddingBottom: 18 }}>
           <div style={{ padding: '18px 24px 22px 37px' }}>
-            <DetailPanel item={item} />
+            <DetailPanel item={item} expanded={expanded} />
           </div>
         </div>
       </div>

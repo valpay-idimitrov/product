@@ -6,7 +6,7 @@ export const AREA_COLORS: Record<string, string> = { 'Reliability': '#0F705F', '
 export const PRIORITY_COLOR: Record<string, string> = { 'Critical': '#A11A5B', 'Urgent': '#8A5A00', 'High': '#0F705F', 'Medium': '#2A5A96', 'Low': '#394962' };
 
 /** Display order of delivery groups (0 = stabilization, must ship first). */
-export const GROUP_ORDER = ['0', '2a', '1a', '1b', '2b', '2c', '3', '4', '5', '6a', '6b', '6c'];
+export const GROUP_ORDER = ['0', '1a', '1b', '2a', '2b', '2c', '3', '4', '5', '6a', '6b', '6c'];
 
 export const GROUP_TIER: Record<string, string> = {
   '0': 'Now', '1a': 'Next', '1b': 'Next', '2a': 'Then', '2b': 'Then', '2c': 'Then',
@@ -27,6 +27,12 @@ export const QUARTER_MONTHS = ['Jul 2026', 'Aug 2026', 'Sep 2026'];
 export const OBSERVED_RATE = 1.44;
 
 export const ITEMS: Item[] = [
+    { id: 'aggstate', title: 'Statements: Aggregate statements (merchant-level)', titleNote: '(check with Tarek)', group: '0', jira: '', area: 'Reliability', priority: 'Urgent', status: 'planned', progress: 0, effort: 'No date', targetDate: 'Not committed', s: 0, e: 2, bullets: [], subItems: [], groups: [],
+      estimates: {"source":"No Jira ticket yet · unsized · scope to confirm with Tarek","effort":"0%","effortNote":"unsized","delivered":"0%","deliveredNote":"not started","date":"Not committed","dateNote":"needs a ticket and a Complexity value"} },
+    { id: 'imports', title: 'Data import pipelines', titleNote: '(check with Tarek)', group: '0', jira: '', area: 'Reliability', priority: 'Medium', status: 'planned', progress: 0, effort: 'No date', targetDate: 'Not committed', s: 0, e: 2, bullets: [], subItems: [], groups: [],
+      estimates: {"source":"No Jira ticket yet · unsized · scope to confirm with Tarek","effort":"0%","effortNote":"unsized","delivered":"0%","deliveredNote":"not started","date":"Not committed","dateNote":"needs a ticket and a Complexity value"} },
+    { id: 'capital', title: 'EU/AU/UK Capital with Adyen', group: '1b', jira: '', area: 'Capital', priority: 'Critical', status: 'planned', progress: 0, effort: 'No date', targetDate: 'Not committed', s: 0, e: 2, bullets: [], subItems: [], groups: [],
+      estimates: {"source":"No Jira ticket yet · unsized · dependent on Adyen Capital availability per region","effort":"0%","effortNote":"unsized","delivered":"0%","deliveredNote":"not started","date":"Not committed","dateNote":"needs a ticket and a Complexity value"} },
     { id: 'oxfam', title: 'Oxfam export limit increase', group: '0', jira: 'VK-2385', area: 'Reliability', priority: 'Medium', status: 'planned', progress: 0, effort: 'ETA 13 Sep', s: 1.58, e: 1.4, bullets: [], subItems: [],
       groups: [{"name":"Oxfam export limit increase","key":"VK-2385","pct":0,"pctLabel":"0%","meta":"1 issue · 5.0 d · 5.0 left · est. 13 Sep 2026","status":"To Do","chip":"planned","lines":[],"issues":[{"key":"VK-2385","label":"Oxfam export limit increase — Hadi Andari","status":"To Do","chip":"planned","cx":"5 · Extreme"}]}],
       estimates: {"source":"VK-2385 · Complexity 5 — Extreme (4+ days) · To Do, not started","effort":"0%","effortNote":"5.0 d gross","delivered":"0%","deliveredNote":"not started","date":"13 Sep 2026","dateNote":"1.44 est-d/wk observed"} },

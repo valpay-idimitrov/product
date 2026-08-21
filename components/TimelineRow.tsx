@@ -272,36 +272,36 @@ export default function TimelineRow({
                     title={item.note}
                     style={{
                       position: 'relative',
-                      margin: '0 4px 0 5px',
-                      padding: '3px 7px',
+                      margin: '0 3px',
+                      padding: '2px 4px',
                       borderRadius: 3,
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: 4,
+                      gap: 2,
                       background: '#ffffff',
-                      boxShadow: 'inset 0 0 0 1px rgba(214,51,127,.45)',
-                      fontSize: 9,
-                      fontWeight: 700,
+                      boxShadow: 'inset 0 0 0 1px #D6337F',
+                      fontSize: 7,
+                      fontWeight: 800,
                       textTransform: 'uppercase',
-                      letterSpacing: 0.5,
+                      letterSpacing: 0.2,
                       color: '#A11A5B',
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    <span style={{ width: 5, height: 5, borderRadius: 999, flex: '0 0 auto', background: '#D6337F' }} />
-                    {item.note}
+                    <span style={{ width: 4, height: 4, borderRadius: 999, flex: '0 0 auto', background: '#D6337F' }} />
+                    {item.noteShort}
                   </span>
                 ) : (
                 <span
                   style={{
                     position: 'relative',
                     margin: '0 4px 0 5px',
-                    padding: '3px 7px',
+                    padding: '3px 6px',
                     borderRadius: 3,
                     background: '#ffffff',
                     boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
                     fontFamily: MONO,
-                    fontSize: 9,
+                    fontSize: 8,
                     fontWeight: 700,
                     textTransform: 'uppercase',
                     letterSpacing: 0.3,
@@ -347,33 +347,33 @@ export default function TimelineRow({
                 <span
                   title={item.note}
                   style={{
-                    padding: '3px 7px',
+                    padding: '2px 4px',
                     borderRadius: 3,
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: 4,
+                    gap: 2,
                     background: '#ffffff',
-                    boxShadow: 'inset 0 0 0 1px rgba(214,51,127,.45)',
-                    fontSize: 9,
-                    fontWeight: 700,
+                    boxShadow: 'inset 0 0 0 1px #D6337F',
+                    fontSize: 7,
+                    fontWeight: 800,
                     textTransform: 'uppercase',
-                    letterSpacing: 0.5,
+                    letterSpacing: 0.2,
                     color: '#A11A5B',
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  <span style={{ width: 5, height: 5, borderRadius: 999, flex: '0 0 auto', background: '#D6337F' }} />
-                  {item.note}
+                  <span style={{ width: 4, height: 4, borderRadius: 999, flex: '0 0 auto', background: '#D6337F' }} />
+                  {item.noteShort}
                 </span>
               ) : (
               <span
                 style={{
-                  padding: '3px 7px',
+                  padding: '3px 6px',
                   borderRadius: 3,
                   background: '#ffffff',
                   boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
                   fontFamily: MONO,
-                  fontSize: 9,
+                  fontSize: 8,
                   fontWeight: 700,
                   textTransform: 'uppercase',
                   letterSpacing: 0.3,

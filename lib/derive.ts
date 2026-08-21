@@ -119,6 +119,7 @@ export interface DerivedItem extends Item {
   projLabel: string;
   projDate: string;
   projNote: string;
+  noteShort: string;
   todoSummary: string;
   derivedGroups: DerivedGroup[];
 }
@@ -156,9 +157,9 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     barLeft: left === 0 ? '0%' : `calc(${left}% + 2px)`,
     barWidth: left === 0 ? `calc(${width}% - 7px)` : `calc(${width}% - 9px)`,
     barRight: `calc(${left + width}% - 7px)`,
-    // 590px is the timeline cell at the 1040px board width.
-    // A note pill is wider than a date chip, so those rows need more room.
-    narrowBar: Math.round((width / 100) * 590) - 9 < (it.note ? 250 : 130),
+    // Note pills render inside the bar regardless of width (board treatment);
+    // otherwise fall back to the width-based threshold.
+    narrowBar: it.note ? false : Math.round((width / 100) * 590) - 9 < 130,
     labelSide:
       left + width > 88
         ? { right: `calc(100% - ${left}% + 8px)` }
@@ -167,10 +168,17 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     deliveredPct: `${est ? parseFloat(est.delivered) || 0 : 0}%`,
     jiraUrl: `https://valpay.atlassian.net/browse/${it.jira}`,
     showCheck: it.progress >= 100,
-    dateLabel: est?.committed ?? it.effort ?? '',
+    dateLabel:
+      it.id === 'domains'
+        ? 'ETA 30 Sep – 7 Oct'
+        : (() => {
+            const raw = (est?.committed ?? it.effort ?? '').replace(/\s*20\d\d\b/, '');
+            return raw === 'Shipped' || !raw ? raw : `ETA ${raw.replace(/^ETA\s*/i, '')}`;
+          })(),
     projLabel: est ? (est.committed ? 'Committed' : 'Projected') : '',
     projDate: est ? est.committed ?? est.date : '',
     projNote: est ? est.committedNote ?? est.dateNote : '',
+    noteShort: it.note === 'blocked by Adyen API' ? 'Blocked by Adyen' : it.note === 'pending commercials' ? 'Pending commercials' : it.note ?? '',
     todoSummary: !all.length
       ? ''
       : outstanding === 0

@@ -13,6 +13,9 @@ const ACCENT = '#0F705F';
 export default function Roadmap() {
   const [cat, setCat] = useState('All');
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  // Bumped on every tab switch; alternates the row animation name so React
+  // replays the stagger instead of reusing settled nodes.
+  const [animTick, setAnimTick] = useState(0);
 
   const rows = useMemo(() => {
     const sorted = [...ITEMS].sort(
@@ -59,6 +62,7 @@ export default function Roadmap() {
           onSelect={(c) => {
             setCat(c);
             setExpandedId(null);
+            setAnimTick((t) => t + 1);
           }}
         />
       </div>
@@ -114,6 +118,7 @@ export default function Roadmap() {
             expanded={expandedId === item.id}
             dimmed={expandedId !== null && expandedId !== item.id}
             delay={i * 34}
+            animName={animTick % 2 ? 'rowInB' : 'rowIn'}
             onToggle={() => setExpandedId((cur) => (cur === item.id ? null : item.id))}
           />
         ))}

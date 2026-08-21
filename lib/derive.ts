@@ -97,8 +97,14 @@ export interface DerivedItem extends Item {
   areaHover: string;
   areaWritten: string;
   areaSoft: string;
+  areaMerged: string;
+  areaDash: string;
   areaGrad: string;
   barRight: string;
+  /** True when the bar is too narrow to hold its two chips. */
+  narrowBar: boolean;
+  /** Positions the external label group left or right of the bar. */
+  labelSide: React.CSSProperties;
   priorityColor: string;
   groupCode: string;
   groupTier: string;
@@ -124,7 +130,10 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
   const left = (it.s / months) * 100;
   const width = ((it.e - it.s + 1) / months) * 100;
   const est = it.estimates;
-  const all = (it.groups ?? []).flatMap((g) => g.issues ?? []);
+  // Groups excluded from the band must not be counted here, or the summary
+  // contradicts the effort figure (Email read 69% against 18 of 18).
+  const counted = (it.groups ?? []).filter((g) => !/not committed|excluded from the band/i.test(g.meta ?? ''));
+  const all = counted.flatMap((g) => g.issues ?? []);
   const outstanding = all.filter((x) => x.chip !== 'done').length;
   return {
     ...it,
@@ -135,15 +144,25 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     areaHover: hexRgba(areaColor, 0.14),
     areaWritten: hexRgba(areaColor, 0.38),
     areaSoft: `color-mix(in srgb, ${areaColor} 9%, #ffffff)`,
+    areaMerged: `color-mix(in srgb, ${areaColor} 45%, #062922)`,
+    areaDash: hexRgba(areaColor, 0.38),
     areaGrad: `linear-gradient(90deg, ${areaColor}, color-mix(in srgb, ${areaColor} 86%, #ffffff))`,
     priorityColor: PRIORITY_COLOR[it.priority] ?? areaColor,
     groupCode: (it.group ?? '').toUpperCase(),
     groupTier: GROUP_TIER[it.group] ?? 'Later',
     groupTitle: GROUP_TITLE[it.group] ?? `Group ${(it.group ?? '').toUpperCase()}`,
-    // 7px inset each side keeps adjacent bars from touching the month gridlines.
-    barLeft: `calc(${left}% + 7px)`,
-    barWidth: `calc(${width}% - 14px)`,
+    // 7px inset each side keeps adjacent bars from touching the month gridlines;
+    // a bar starting at the grid edge sits flush instead.
+    barLeft: left === 0 ? '0%' : `calc(${left}% + 2px)`,
+    barWidth: left === 0 ? `calc(${width}% - 7px)` : `calc(${width}% - 9px)`,
     barRight: `calc(${left + width}% - 7px)`,
+    // 590px is the timeline cell at the 1040px board width.
+    // A note pill is wider than a date chip, so those rows need more room.
+    narrowBar: Math.round((width / 100) * 590) - 9 < (it.note ? 250 : 130),
+    labelSide:
+      left + width > 88
+        ? { right: `calc(100% - ${left}% + 8px)` }
+        : { left: `calc(${left + width}% - 7px)`, marginLeft: 8 },
     effortPct: `${est ? parseFloat(est.effort) || 0 : 0}%`,
     deliveredPct: `${est ? parseFloat(est.delivered) || 0 : 0}%`,
     jiraUrl: `https://valpay.atlassian.net/browse/${it.jira}`,

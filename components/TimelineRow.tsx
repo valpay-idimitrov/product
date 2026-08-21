@@ -14,6 +14,7 @@ export default function TimelineRow({
   expanded,
   dimmed,
   delay,
+  animName,
   onToggle,
 }: {
   item: DerivedItem;
@@ -21,6 +22,8 @@ export default function TimelineRow({
   expanded: boolean;
   dimmed: boolean;
   delay: number;
+  /** Alternates per tab switch so the entrance animation replays. */
+  animName: string;
   onToggle: () => void;
 }) {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -72,8 +75,8 @@ export default function TimelineRow({
           minHeight: 66,
           padding: '3px 0',
           cursor: 'pointer',
-          animation: `rowIn .34s ${SNAP} both`,
-          animationDelay: `${delay}ms`,
+          // Delay lives in the shorthand: a sibling animationDelay key resets it.
+          animation: `${animName} .34s ${SNAP} ${delay}ms both`,
         }}
       >
         <div
@@ -179,22 +182,7 @@ export default function TimelineRow({
             >
               {item.priority}
             </span>
-            {item.note && (
-              <span
-                title={item.note}
-                style={{
-                  fontSize: 9.5,
-                  lineHeight: '14px',
-                  fontStyle: 'italic',
-                  color: 'var(--txt-faint)',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {item.note}
-              </span>
-            )}
+
           </div>
         </div>
 
@@ -223,6 +211,8 @@ export default function TimelineRow({
               height: 24,
               left: item.barLeft,
               width: item.barWidth,
+              // Floor so a one-week span stays legible; does not shift any date.
+              minWidth: 62,
               borderRadius: 4,
               overflow: 'hidden',
               zIndex: 1,
@@ -256,43 +246,145 @@ export default function TimelineRow({
               />
             </div>
 
-            <span
-              style={{
-                position: 'relative',
-                margin: '0 4px',
-                padding: '2px 7px',
-                borderRadius: 3,
-                fontFamily: MONO,
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: 0.3,
-                whiteSpace: 'nowrap',
-                color: '#fff',
-                background: item.areaTextColor,
-              }}
-            >
-              {item.progress}%
-            </span>
-            <span
-              style={{
-                position: 'relative',
-                margin: '0 4px 0 5px',
-                padding: '3px 7px',
-                borderRadius: 3,
-                background: '#ffffff',
-                boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
-                fontFamily: MONO,
-                fontSize: 9,
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: 0.3,
-                whiteSpace: 'nowrap',
-                color: item.areaTextColor,
-              }}
-            >
-              {item.dateLabel}
-            </span>
+            {/* Below ~130px the bar cannot hold both chips; they render outside
+                the overflow:hidden box instead of being clipped. */}
+            {!item.narrowBar && (
+              <>
+                <span
+                  style={{
+                    position: 'relative',
+                    margin: '0 4px',
+                    padding: '2px 7px',
+                    borderRadius: 3,
+                    fontFamily: MONO,
+                    fontSize: 10,
+                    fontWeight: 700,
+                    letterSpacing: 0.3,
+                    whiteSpace: 'nowrap',
+                    color: '#fff',
+                    background: item.areaTextColor,
+                  }}
+                >
+                  {item.progress}%
+                </span>
+                {item.note ? (
+                  <span
+                    title={item.note}
+                    style={{
+                      position: 'relative',
+                      margin: '0 4px 0 5px',
+                      padding: '3px 7px',
+                      borderRadius: 3,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                      background: '#ffffff',
+                      boxShadow: 'inset 0 0 0 1px rgba(214,51,127,.45)',
+                      fontSize: 9,
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                      letterSpacing: 0.5,
+                      color: '#A11A5B',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    <span style={{ width: 5, height: 5, borderRadius: 999, flex: '0 0 auto', background: '#D6337F' }} />
+                    {item.note}
+                  </span>
+                ) : (
+                <span
+                  style={{
+                    position: 'relative',
+                    margin: '0 4px 0 5px',
+                    padding: '3px 7px',
+                    borderRadius: 3,
+                    background: '#ffffff',
+                    boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
+                    fontFamily: MONO,
+                    fontSize: 9,
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: 0.3,
+                    whiteSpace: 'nowrap',
+                    color: item.areaTextColor,
+                  }}
+                >
+                  {item.dateLabel}
+                </span>
+                )}
+              </>
+            )}
           </div>
+
+          {item.narrowBar && (
+            <span
+              style={{
+                position: 'absolute',
+                top: 'calc(50% - 10px)',
+                ...item.labelSide,
+                zIndex: 3,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 5,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <span
+                style={{
+                  padding: '2px 7px',
+                  borderRadius: 3,
+                  fontFamily: MONO,
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: 0.3,
+                  color: '#fff',
+                  background: item.areaTextColor,
+                }}
+              >
+                {item.progress}%
+              </span>
+              {item.note ? (
+                <span
+                  title={item.note}
+                  style={{
+                    padding: '3px 7px',
+                    borderRadius: 3,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    background: '#ffffff',
+                    boxShadow: 'inset 0 0 0 1px rgba(214,51,127,.45)',
+                    fontSize: 9,
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: 0.5,
+                    color: '#A11A5B',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <span style={{ width: 5, height: 5, borderRadius: 999, flex: '0 0 auto', background: '#D6337F' }} />
+                  {item.note}
+                </span>
+              ) : (
+              <span
+                style={{
+                  padding: '3px 7px',
+                  borderRadius: 3,
+                  background: '#ffffff',
+                  boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
+                  fontFamily: MONO,
+                  fontSize: 9,
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: 0.3,
+                  color: item.areaTextColor,
+                }}
+              >
+                {item.dateLabel}
+              </span>
+              )}
+            </span>
+          )}
 
           {item.showCheck && (
             <ShippedBadge

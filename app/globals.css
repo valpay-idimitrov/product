@@ -54,6 +54,13 @@ a:hover { color: #2a5a96; text-decoration: underline; }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Identical twin of rowIn — alternating between the two restarts the
+   animation on tab switch, which a single name cannot do. */
+@keyframes rowInB {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Completed meters pulse. Applied to the meter, not each bar — 5x the nodes
    animating infinitely was enough to stall rendering. */
 @keyframes pipPulse {

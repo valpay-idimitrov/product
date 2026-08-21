@@ -4,6 +4,44 @@ export interface HeaderStats {
   priorityMix: string;
 }
 
+const SNAP = 'cubic-bezier(.22,1,.36,1)';
+
+function InternalUsePill() {
+  return (
+    <span
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 4,
+        marginTop: 8,
+        padding: '2px 6px',
+        borderRadius: 3,
+        background: '#ffffff',
+        boxShadow: 'inset 0 0 0 1px #D6337F',
+        fontFamily: 'var(--font-mono)',
+        fontSize: 9,
+        fontWeight: 800,
+        textTransform: 'uppercase',
+        letterSpacing: 0.3,
+        color: '#A11A5B',
+        animation: 'internalRing 2.1s ease-in-out 1.5s infinite',
+      }}
+    >
+      <span
+        style={{
+          width: 4,
+          height: 4,
+          borderRadius: 999,
+          flex: '0 0 auto',
+          background: '#D6337F',
+          animation: 'pipPulse 2.1s ease-in-out 1.5s infinite',
+        }}
+      />
+      Internal use only
+    </span>
+  );
+}
+
 export default function RoadmapHeader({ accent, stats }: { accent: string; stats: HeaderStats }) {
   const headBg = [
     `radial-gradient(110% 130% at 0% -20%, color-mix(in srgb, ${accent} 16%, transparent) 0%, transparent 48%)`,
@@ -29,6 +67,7 @@ export default function RoadmapHeader({ accent, stats }: { accent: string; stats
           >
             Q3 Roadmap
           </h1>
+          <InternalUsePill />
         </div>
 
         <div

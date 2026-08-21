@@ -115,6 +115,7 @@ export interface DerivedItem extends Item {
   deliveredPct: string;
   jiraUrl: string;
   showCheck: boolean;
+  fillPct: number;
   dateLabel: string;
   projLabel: string;
   projDate: string;
@@ -168,6 +169,9 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     deliveredPct: `${est ? parseFloat(est.delivered) || 0 : 0}%`,
     jiraUrl: `https://valpay.atlassian.net/browse/${it.jira}`,
     showCheck: it.progress >= 100,
+    // Custom Domains bar shows more visual fill than its 8% chip — a deliberate
+    // divergence from the user, not a bug; keep the two in sync here.
+    fillPct: it.id === 'domains' ? 20 : it.progress,
     dateLabel:
       it.id === 'domains'
         ? 'ETA 30 Sep – 7 Oct'

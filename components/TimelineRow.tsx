@@ -230,7 +230,7 @@ export default function TimelineRow({
                 top: 0,
                 left: 0,
                 bottom: 0,
-                width: `${item.progress}%`,
+                width: `${item.fillPct}%`,
                 background: item.areaGrad,
               }}
             >

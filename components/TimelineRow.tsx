@@ -316,6 +316,30 @@ export default function TimelineRow({
             )}
           </div>
 
+          {item.hasDelta && (
+            <span
+              title="Since last update"
+              style={{
+                position: 'absolute',
+                top: 2,
+                left: item.barLeft,
+                zIndex: 3,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 4,
+                fontFamily: MONO,
+                fontSize: 10,
+                fontWeight: 800,
+                whiteSpace: 'nowrap',
+                color: item.deltaColor,
+              }}
+            >
+              <span style={{ fontSize: 9 }}>{item.deltaArrow}</span>
+              {item.deltaLabel}
+              <span style={{ fontWeight: 500, opacity: 0.75, marginLeft: 4 }}>since last update</span>
+            </span>
+          )}
+
           {item.narrowBar && (
             <span
               style={{

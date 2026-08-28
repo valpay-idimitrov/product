@@ -47,6 +47,7 @@ export interface Item {
   priority: string;
   status: 'shipped' | 'in-progress' | 'planned';
   progress: number;
+  prevProgress?: number;
   effort: string;
   targetDate?: string;
   /** Timeline span in month units across the quarter: 0 = Jul, 1 = Aug, 2 = Sep. */

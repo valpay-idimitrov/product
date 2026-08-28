@@ -122,6 +122,11 @@ export interface DerivedItem extends Item {
   projNote: string;
   noteShort: string;
   todoSummary: string;
+  hasDelta: boolean;
+  deltaLabel: string;
+  deltaColor: string;
+  deltaBg: string;
+  deltaArrow: string;
   derivedGroups: DerivedGroup[];
 }
 
@@ -183,6 +188,11 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     projDate: est ? est.committed ?? est.date : '',
     projNote: est ? est.committedNote ?? est.dateNote : '',
     noteShort: it.note === 'blocked by Adyen API' ? 'Blocked by Adyen' : it.note === 'pending commercials' ? 'Pending commercials' : it.note ?? '',
+    hasDelta: it.prevProgress != null && it.prevProgress !== it.progress,
+    deltaLabel: it.prevProgress != null ? `${it.progress - it.prevProgress > 0 ? '+' : ''}${it.progress - it.prevProgress}%` : '',
+    deltaColor: it.prevProgress != null && it.progress - it.prevProgress < 0 ? '#B42318' : '#0F705F',
+    deltaBg: it.prevProgress != null && it.progress - it.prevProgress < 0 ? '#FDECEA' : '#EAF6F0',
+    deltaArrow: it.prevProgress != null && it.progress - it.prevProgress < 0 ? '▼' : '▲',
     todoSummary: !all.length
       ? ''
       : outstanding === 0

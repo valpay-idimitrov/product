@@ -178,7 +178,7 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     // divergence from the user, not a bug; keep the two in sync here.
     fillPct: it.id === 'domains' ? 20 : it.progress,
     dateLabel:
-      it.id === 'domains'
+      it.id === 'domains' || it.id === 'p7d1'
         ? 'ETA 30 Sep – 7 Oct'
         : (() => {
             const raw = (est?.committed ?? it.effort ?? '').replace(/\s*20\d\d\b/, '');

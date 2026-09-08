@@ -6,6 +6,7 @@ export interface Issue {
   status: string;
   chip: Chip;
   cx: string;
+  release?: string;
 }
 
 export interface Group {

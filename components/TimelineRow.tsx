@@ -273,18 +273,18 @@ export default function TimelineRow({
                     style={{
                       position: 'relative',
                       margin: '0 3px',
-                      padding: '2px 4px',
+                      padding: '2px 5px',
                       borderRadius: 3,
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: 2,
-                      background: 'rgba(255,255,255,0.08)',
+                      gap: 2.5,
+                      background: 'var(--note-bg)',
                       boxShadow: 'inset 0 0 0 1px #D6337F',
-                      fontSize: 7,
-                      fontWeight: 800,
+                      fontSize: 8,
+                      fontWeight: 700,
                       textTransform: 'uppercase',
-                      letterSpacing: 0.2,
-                      color: '#FF82BB',
+                      letterSpacing: 0.15,
+                      color: 'var(--note-color)',
                       whiteSpace: 'nowrap',
                     }}
                   >
@@ -371,18 +371,18 @@ export default function TimelineRow({
                 <span
                   title={item.note}
                   style={{
-                    padding: '2px 4px',
+                    padding: '2px 5px',
                     borderRadius: 3,
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: 2,
-                    background: 'rgba(255,255,255,0.08)',
+                    gap: 2.5,
+                    background: 'var(--note-bg)',
                     boxShadow: 'inset 0 0 0 1px #D6337F',
-                    fontSize: 7,
-                    fontWeight: 800,
+                    fontSize: 8,
+                    fontWeight: 700,
                     textTransform: 'uppercase',
-                    letterSpacing: 0.2,
-                    color: '#FF82BB',
+                    letterSpacing: 0.15,
+                    color: 'var(--note-color)',
                     whiteSpace: 'nowrap',
                   }}
                 >

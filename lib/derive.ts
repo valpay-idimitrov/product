@@ -175,7 +175,9 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     // otherwise fall back to the width-based threshold.
     narrowBar: it.note ? false : Math.round((width / 100) * 590) - 9 < 130,
     labelSide:
-      left + width > 88
+      it.note
+        ? { left: `calc(${left}% + 2px)` }
+        : left + width > 88
         ? { right: `calc(100% - ${left}% + 8px)` }
         : { left: `calc(${left + width}% - 7px)`, marginLeft: 8 },
     effortPct: `${est ? parseFloat(est.effort) || 0 : 0}%`,

@@ -262,7 +262,7 @@ export default function TimelineRow({
                     letterSpacing: 0.3,
                     whiteSpace: 'nowrap',
                     color: '#fff',
-                    background: item.areaTextColor,
+                    background: item.barLabelBg,
                   }}
                 >
                   {item.progress}%
@@ -362,7 +362,7 @@ export default function TimelineRow({
                   fontWeight: 700,
                   letterSpacing: 0.3,
                   color: '#fff',
-                  background: item.areaTextColor,
+                  background: item.barLabelBg,
                 }}
               >
                 {item.progress}%

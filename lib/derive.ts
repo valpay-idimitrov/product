@@ -113,6 +113,7 @@ export interface DerivedItem extends Item {
   /** Positions the external label group left or right of the bar. */
   labelSide: React.CSSProperties;
   priorityColor: string;
+  barLabelBg: string;
   groupCode: string;
   groupTier: string;
   groupTitle: string;
@@ -163,6 +164,9 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     areaDash: hexRgba(areaBright, 0.38),
     areaGrad: `linear-gradient(90deg, ${areaBright}, color-mix(in srgb, ${areaBright} 80%, #ffffff))`,
     priorityColor: lightenForDark(PRIORITY_COLOR[it.priority] ?? areaColor),
+    // Zero-progress items use a muted dark chip instead of the (often pale)
+    // lightened area colour, which would otherwise look washed out/grey.
+    barLabelBg: it.progress === 0 ? '#1C1538' : areaTextColor,
     groupCode: (it.group ?? '').toUpperCase(),
     groupTier: GROUP_TIER[it.group] ?? 'Later',
     groupTitle: GROUP_TITLE[it.group] ?? `Group ${(it.group ?? '').toUpperCase()}`,

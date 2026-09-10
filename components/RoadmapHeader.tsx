@@ -10,10 +10,11 @@ function InternalUsePill() {
   return (
     <span
       style={{
+        position: 'relative',
+        top: 1,
         display: 'inline-flex',
         alignItems: 'center',
         gap: 4,
-        marginTop: 8,
         padding: '2px 6px',
         borderRadius: 3,
         background: 'rgba(255,255,255,0.08)',
@@ -52,21 +53,21 @@ export default function RoadmapHeader({ accent, stats }: { accent: string; stats
   return (
     <div style={{ padding: '32px 40px 30px', background: headBg }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
-          <img src="/valpay-favicon.png" alt="" style={{ height: 56, display: 'block' }} />
-          <h1
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <img src="/valpay-logo-transparent.webp" alt="ValPay" style={{ height: 24, display: 'block' }} />
+          <span style={{ width: 1.5, height: 14, background: 'var(--txt-faint)', opacity: 0.7 }} />
+          <span
             style={{
-              margin: 0,
               fontFamily: 'var(--font-display)',
-              fontSize: 32,
-              lineHeight: 1,
-              fontWeight: 600,
-              letterSpacing: -1.2,
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: 0.6,
               color: 'var(--txt)',
             }}
           >
             Q3 Roadmap
-          </h1>
+          </span>
+          <span style={{ width: 1.5, height: 14, background: 'var(--txt-faint)', opacity: 0.7, marginRight: 4 }} />
           <InternalUsePill />
         </div>
 

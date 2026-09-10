@@ -74,11 +74,11 @@ export default function Roadmap() {
               display: 'flex',
               alignItems: 'center',
               padding: '0 20px 18px 0',
-              fontSize: 10.5,
-              fontWeight: 700,
-              letterSpacing: 1.1,
-              textTransform: 'uppercase',
-              color: 'var(--txt-faint)',
+              fontFamily: 'var(--font-display)',
+              fontSize: 13,
+              fontWeight: 600,
+              letterSpacing: -0.2,
+              color: 'var(--txt-muted)',
               borderRight: '1px solid var(--row-border)',
             }}
           >
@@ -94,11 +94,11 @@ export default function Roadmap() {
                   justifyContent: 'center',
                   minHeight: 30,
                   paddingBottom: 12,
-                  fontSize: 12,
-                  fontWeight: 700,
-                  letterSpacing: 1,
-                  textTransform: 'uppercase',
-                  color: 'var(--txt-faint)',
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 13,
+                  fontWeight: 600,
+                  letterSpacing: -0.2,
+                  color: 'var(--txt-muted)',
                   borderLeft: i === 0 ? 'none' : '1px solid var(--grid-col)',
                 }}
               >

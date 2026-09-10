@@ -279,7 +279,7 @@ export default function TimelineRow({
                       alignItems: 'center',
                       gap: 2,
                       background: 'rgba(255,255,255,0.08)',
-                      boxShadow: 'inset 0 0 0 1px #FF82BB',
+                      boxShadow: 'inset 0 0 0 1px #D6337F',
                       fontSize: 7,
                       fontWeight: 800,
                       textTransform: 'uppercase',
@@ -288,7 +288,7 @@ export default function TimelineRow({
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    <span style={{ width: 4, height: 4, borderRadius: 999, flex: '0 0 auto', background: '#FF82BB' }} />
+                    <span style={{ width: 4, height: 4, borderRadius: 999, flex: '0 0 auto', background: '#D6337F' }} />
                     {item.noteShort}
                   </span>
                 ) : (
@@ -377,7 +377,7 @@ export default function TimelineRow({
                     alignItems: 'center',
                     gap: 2,
                     background: 'rgba(255,255,255,0.08)',
-                    boxShadow: 'inset 0 0 0 1px #FF82BB',
+                    boxShadow: 'inset 0 0 0 1px #D6337F',
                     fontSize: 7,
                     fontWeight: 800,
                     textTransform: 'uppercase',
@@ -386,7 +386,7 @@ export default function TimelineRow({
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  <span style={{ width: 4, height: 4, borderRadius: 999, flex: '0 0 auto', background: '#FF82BB' }} />
+                  <span style={{ width: 4, height: 4, borderRadius: 999, flex: '0 0 auto', background: '#D6337F' }} />
                   {item.noteShort}
                 </span>
               ) : (

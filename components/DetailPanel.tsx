@@ -20,9 +20,9 @@ export default function DetailPanel({
   return (
     <div
       style={{
-        border: '1px solid var(--hairline)',
+        border: '1px solid var(--card-border)',
         borderRadius: 14,
-        background: '#ffffff',
+        background: 'var(--card-bg)',
         boxShadow: 'var(--shadow-md)',
         overflow: 'hidden',
         opacity: expanded ? 1 : 0,
@@ -69,7 +69,7 @@ export default function DetailPanel({
                   height: 6,
                   borderRadius: 'var(--radius-pill)',
                   overflow: 'hidden',
-                  background: 'rgba(23,33,74,.07)',
+                  background: 'rgba(255,255,255,.12)',
                 }}
               >
                 <div
@@ -105,7 +105,7 @@ export default function DetailPanel({
               style={{
                 flex: '0 0 auto',
                 paddingLeft: 28,
-                borderLeft: '1px solid rgba(23,33,74,.08)',
+                borderLeft: '1px solid rgba(255,255,255,.14)',
                 maxWidth: 230,
               }}
             >
@@ -146,8 +146,8 @@ export default function DetailPanel({
               lineHeight: '16px',
               color: 'var(--txt-faint)',
               padding: '11px 24px 12px',
-              borderTop: '1px solid rgba(23,33,74,.06)',
-              background: 'rgba(23,33,74,.015)',
+              borderTop: '1px solid rgba(255,255,255,.10)',
+              background: 'rgba(255,255,255,.04)',
               ...PRETTY,
             }}
           >
@@ -165,7 +165,7 @@ export default function DetailPanel({
               alignItems: 'baseline',
               gap: 14,
               padding: '16px 24px 7px',
-              borderTop: '1px solid rgba(23,33,74,.06)',
+              borderTop: '1px solid rgba(255,255,255,.10)',
             }}
           >
             <Overline color="var(--txt)" style={{ gridColumn: '1 / 4' }}>
@@ -243,7 +243,7 @@ export default function DetailPanel({
                         top: 6,
                         bottom: 16,
                         width: 1,
-                        background: 'rgba(23,33,74,.14)',
+                        background: 'rgba(255,255,255,.18)',
                       }}
                     />
                   )}
@@ -282,15 +282,15 @@ export default function DetailPanel({
                           fontSize: 7,
                           fontWeight: 700,
                           lineHeight: 1,
-                          color: iss.chip === 'done' || iss.chip === 'blocked' ? '#ffffff' : 'transparent',
+                          color: iss.chip === 'done' || iss.chip === 'blocked' ? '#1C1538' : 'transparent',
                           ...(iss.chip === 'done' || iss.chip === 'blocked'
-                            ? { background: iss.dotColor, border: '3px solid #ffffff' }
+                            ? { background: iss.dotColor, border: '3px solid var(--card-bg)' }
                             : iss.chip === 'planned'
-                              ? { background: '#ffffff', border: '2px solid #C3CAD4', outline: '3px solid #ffffff' }
+                              ? { background: 'var(--card-bg)', border: '2px solid #8A7FBD', outline: '3px solid var(--card-bg)' }
                               : {
                                   background: `${iss.dotColor}3D`,
                                   border: `2px solid ${iss.dotColor}`,
-                                  outline: '3px solid #ffffff',
+                                  outline: '3px solid var(--card-bg)',
                                 }),
                         }}
                       >
@@ -384,7 +384,7 @@ export default function DetailPanel({
             letterSpacing: 1,
             color: 'var(--txt-faint)',
             padding: '14px 24px 16px',
-            borderTop: est ? '1px solid rgba(23,33,74,.06)' : 'none',
+            borderTop: est ? '1px solid rgba(255,255,255,.10)' : 'none',
           }}
         >
           No linked Jira issues yet

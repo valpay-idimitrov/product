@@ -16,14 +16,14 @@ function InternalUsePill() {
         marginTop: 8,
         padding: '2px 6px',
         borderRadius: 3,
-        background: '#ffffff',
-        boxShadow: 'inset 0 0 0 1px #D6337F',
+        background: 'rgba(255,255,255,0.08)',
+        boxShadow: 'inset 0 0 0 1px #FF82BB',
         fontFamily: 'var(--font-mono)',
         fontSize: 9,
         fontWeight: 800,
         textTransform: 'uppercase',
         letterSpacing: 0.3,
-        color: '#A11A5B',
+        color: '#FF82BB',
         animation: 'internalRing 2.1s ease-in-out 1.5s infinite',
       }}
     >
@@ -33,7 +33,7 @@ function InternalUsePill() {
           height: 4,
           borderRadius: 999,
           flex: '0 0 auto',
-          background: '#D6337F',
+          background: '#FF82BB',
           animation: 'pipPulse 2.1s ease-in-out 1.5s infinite',
         }}
       />
@@ -46,7 +46,7 @@ export default function RoadmapHeader({ accent, stats }: { accent: string; stats
   const headBg = [
     `radial-gradient(110% 130% at 0% -20%, color-mix(in srgb, ${accent} 16%, transparent) 0%, transparent 48%)`,
     `radial-gradient(90% 120% at 100% 0%, color-mix(in srgb, ${accent} 10%, transparent) 0%, transparent 52%)`,
-    `linear-gradient(120deg, color-mix(in srgb, ${accent} 6%, #ffffff) 0%, transparent 70%)`,
+    `linear-gradient(120deg, color-mix(in srgb, ${accent} 10%, transparent) 0%, transparent 70%)`,
   ].join(',');
 
   return (
@@ -80,8 +80,8 @@ export default function RoadmapHeader({ accent, stats }: { accent: string; stats
             marginLeft: 'auto',
             padding: '14px 20px',
             borderRadius: 'var(--radius-md)',
-            background: 'rgba(23,33,74,0.018)',
-            border: '1px solid rgba(23,33,74,0.06)',
+            background: 'var(--panel-bg)',
+            border: '1px solid var(--panel-border)',
           }}
         >
           <div style={{ order: 1, flex: '0 0 auto', minWidth: 158 }}>
@@ -131,13 +131,13 @@ export default function RoadmapHeader({ accent, stats }: { accent: string; stats
               height: 64,
               flex: '0 0 auto',
               borderRadius: '50%',
-              background: `conic-gradient(${accent} ${stats.avg * 3.6}deg, rgba(23,33,74,0.10) 0)`,
+              background: `conic-gradient(${accent} ${stats.avg * 3.6}deg, var(--ring-track) 0)`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <div style={{ position: 'absolute', inset: 7, borderRadius: '50%', background: '#ffffff' }} />
+            <div style={{ position: 'absolute', inset: 7, borderRadius: '50%', background: 'var(--ring-hole)' }} />
             <span
               style={{
                 position: 'relative',

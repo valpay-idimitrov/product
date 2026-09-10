@@ -1,6 +1,7 @@
 'use client';
 
 import { AREA_COLORS } from '@/lib/data';
+import { lightenForDark } from '@/lib/derive';
 import type { Item } from '@/lib/types';
 
 const SNAP = 'cubic-bezier(.22,1,.36,1)';
@@ -21,7 +22,7 @@ export default function CategoryTabs({
   return (
     <div style={{ display: 'flex', alignItems: 'stretch', gap: 2, borderBottom: '1px solid var(--row-border)' }}>
       {names.map((name) => {
-        const color = name === 'All' ? accent : AREA_COLORS[name];
+        const color = name === 'All' ? accent : lightenForDark(AREA_COLORS[name]);
         const on = name === active;
         const count = name === 'All' ? items.length : items.filter((it) => it.area === name).length;
         return (
@@ -48,15 +49,15 @@ export default function CategoryTabs({
               transition: `background .2s ${SNAP}, color .2s ${SNAP}, border-color .2s ${SNAP}`,
               ...(on
                 ? {
-                    background: '#ffffff',
+                    background: 'var(--card-bg)',
                     color,
                     borderColor: 'var(--row-border)',
-                    borderBottomColor: '#ffffff',
+                    borderBottomColor: 'var(--card-bg)',
                     marginBottom: -1,
                     fontWeight: 600,
                   }
                 : {
-                    background: `color-mix(in srgb, ${color} 5%, transparent)`,
+                    background: `color-mix(in srgb, ${color} 10%, transparent)`,
                     color: 'var(--txt-muted)',
                     borderColor: 'transparent',
                     borderBottomColor: 'var(--row-border)',
@@ -88,8 +89,8 @@ export default function CategoryTabs({
                 borderRadius: 3,
                 transition: `all .2s ${SNAP}`,
                 ...(on
-                  ? { background: `color-mix(in srgb, ${color} 12%, transparent)`, color }
-                  : { background: 'rgba(23,33,74,.05)' }),
+                  ? { background: `color-mix(in srgb, ${color} 20%, transparent)`, color }
+                  : { background: 'rgba(255,255,255,.08)' }),
               }}
             >
               {count}

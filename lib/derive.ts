@@ -9,12 +9,20 @@ export const hexRgba = (hex: string, a: number) => {
 /** #437CC0 fails AA as text at small sizes; darken it wherever it carries a glyph. */
 export const textSafe = (areaColor: string) => (areaColor === '#437CC0' ? '#2A5A96' : areaColor);
 
+/** Lavender-dark theme: brightened equivalents of the light-theme hexes so text/chips stay legible on the dark card. */
+const LIGHTEN_MAP: Record<string, string> = {
+  '#0F705F': '#5BC99A', '#437CC0': '#7EB6EE', '#17214A': '#D2D9EC', '#A11A5B': '#FF82BB',
+  '#8A5A00': '#F0BE6E', '#2A5A96': '#7EB6EE', '#394962': '#D2D9EC', '#D6337F': '#FF82BB',
+  '#E0A43B': '#F0BE6E', '#8A94A6': '#D2D9EC', '#5C6B7F': '#D2D9EC', '#B42318': '#F5897A',
+};
+export const lightenForDark = (hex: string) => LIGHTEN_MAP[hex] ?? hex;
+
 export const CHIP_TEXT: Record<Chip, string> = {
-  done: '#0F705F', review: '#2A5A96', progress: '#8A5A00', blocked: '#A11A5B', planned: '#394962',
+  done: '#5BC99A', review: '#7EB6EE', progress: '#F0BE6E', blocked: '#FF82BB', planned: '#C7B9E8',
 };
 
 export const CHIP_DOT: Record<Chip, string> = {
-  done: '#0F705F', review: '#2A5A96', progress: '#E0A43B', blocked: '#D6337F', planned: '#C3CAD4',
+  done: '#5BC99A', review: '#7EB6EE', progress: '#F0BE6E', blocked: '#FF82BB', planned: '#8A7FBD',
 };
 
 /**
@@ -53,13 +61,12 @@ export const deriveIssue = (iss: Issue): DerivedIssue => {
     ...iss,
     level,
     isDone,
-    meterColor: isDone ? '#0F705F' : CHIP_DOT[iss.chip] ?? '#8A94A6',
-    dotColor: CHIP_DOT[iss.chip] ?? '#C3CAD4',
+    meterColor: isDone ? '#5BC99A' : CHIP_DOT[iss.chip] ?? '#D2D9EC',
+    dotColor: CHIP_DOT[iss.chip] ?? '#8A7FBD',
     glyph: iss.chip === 'done' ? '✓' : iss.chip === 'blocked' ? '!' : '',
-    labelColor: iss.chip === 'done' ? '#5C6B7F' : '#17214A',
+    labelColor: iss.chip === 'done' ? '#C7B9E8' : '#FFFFFF',
     cxName: unsized ? 'Unsized' : iss.cx.split('· ')[1] ?? iss.cx,
-    // #8A94A6 measures 3.06:1 on white — below AA at 9px. #5C6B7F is 5.43:1.
-    cxColor: unsized ? '#5C6B7F' : '#394962',
+    cxColor: unsized ? '#C7B9E8' : '#E4DCF5',
     jiraUrl: `https://valpay.atlassian.net/browse/${iss.key}`,
   };
 };
@@ -81,7 +88,7 @@ export const deriveGroup = (g: Group): DerivedGroup => {
     ...g,
     derivedIssues: issues.map(deriveIssue),
     remainLabel: left === 0 ? 'All done' : `${left} left`,
-    remainColor: left === 0 ? '#0F705F' : '#8A5A00',
+    remainColor: left === 0 ? '#5BC99A' : '#F0BE6E',
     dateLabel: dateMatch
       ? `${(g.meta ?? '').includes('Shipped') ? 'Shipped ' : 'Est. '}${dateMatch[1].trim()}`
       : 'Not committed',
@@ -133,7 +140,8 @@ export interface DerivedItem extends Item {
 /** @param months number of columns in the timeline grid (3 for a quarter). */
 export const deriveItem = (it: Item, months = 3): DerivedItem => {
   const areaColor = AREA_COLORS[it.area] ?? '#17214A';
-  const areaTextColor = textSafe(areaColor);
+  const areaTextColor = lightenForDark(textSafe(areaColor));
+  const areaBright = lightenForDark(areaColor);
   const left = (it.s / months) * 100;
   const width = ((it.e - it.s + 1) / months) * 100;
   const est = it.estimates;
@@ -146,15 +154,15 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     ...it,
     areaColor,
     areaTextColor,
-    areaFaint: hexRgba(areaColor, 0.05),
-    areaBadge: hexRgba(areaColor, 0.12),
-    areaHover: hexRgba(areaColor, 0.14),
-    areaWritten: hexRgba(areaColor, 0.38),
-    areaSoft: `color-mix(in srgb, ${areaColor} 9%, #ffffff)`,
-    areaMerged: `color-mix(in srgb, ${areaColor} 45%, #062922)`,
-    areaDash: hexRgba(areaColor, 0.38),
-    areaGrad: `linear-gradient(90deg, ${areaColor}, color-mix(in srgb, ${areaColor} 86%, #ffffff))`,
-    priorityColor: PRIORITY_COLOR[it.priority] ?? areaColor,
+    areaFaint: 'rgba(255,255,255,0.06)',
+    areaBadge: hexRgba(areaBright, 0.2),
+    areaHover: 'rgba(20,14,38,0.55)',
+    areaWritten: hexRgba(areaBright, 0.38),
+    areaSoft: 'rgba(20,14,38,0.35)',
+    areaMerged: `color-mix(in srgb, ${areaBright} 45%, #062922)`,
+    areaDash: hexRgba(areaBright, 0.38),
+    areaGrad: `linear-gradient(90deg, ${areaBright}, color-mix(in srgb, ${areaBright} 80%, #ffffff))`,
+    priorityColor: lightenForDark(PRIORITY_COLOR[it.priority] ?? areaColor),
     groupCode: (it.group ?? '').toUpperCase(),
     groupTier: GROUP_TIER[it.group] ?? 'Later',
     groupTitle: GROUP_TITLE[it.group] ?? `Group ${(it.group ?? '').toUpperCase()}`,
@@ -179,7 +187,7 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     fillPct: it.id === 'domains' ? 20 : it.progress,
     dateLabel:
       it.id === 'domains' || it.id === 'p7d1'
-        ? 'ETA 30 Sep – 7 Oct'
+        ? 'ETA 30 Sep'
         : (() => {
             const raw = (est?.committed ?? it.effort ?? '').replace(/\s*20\d\d\b/, '');
             return raw === 'Shipped' || !raw ? raw : `ETA ${raw.replace(/^ETA\s*/i, '')}`;
@@ -190,8 +198,8 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     noteShort: it.note === 'blocked by Adyen API' ? 'Blocked by Adyen' : it.note === 'pending commercials' ? 'Pending commercials' : it.note ?? '',
     hasDelta: it.prevProgress != null && it.prevProgress !== it.progress,
     deltaLabel: it.prevProgress != null ? `${it.progress - it.prevProgress > 0 ? '+' : ''}${it.progress - it.prevProgress}%` : '',
-    deltaColor: it.prevProgress != null && it.progress - it.prevProgress < 0 ? '#B42318' : '#0F705F',
-    deltaBg: it.prevProgress != null && it.progress - it.prevProgress < 0 ? '#FDECEA' : '#EAF6F0',
+    deltaColor: it.prevProgress != null && it.progress - it.prevProgress < 0 ? '#F5897A' : '#5BC99A',
+    deltaBg: it.prevProgress != null && it.progress - it.prevProgress < 0 ? 'rgba(245,137,122,0.16)' : 'rgba(91,201,154,0.16)',
     deltaArrow: it.prevProgress != null && it.progress - it.prevProgress < 0 ? '▼' : '▲',
     todoSummary: !all.length
       ? ''

@@ -25,7 +25,7 @@ export default function ProgressMeter({ issue }: { issue: DerivedIssue }) {
             width: 5,
             height: 11,
             borderRadius: 1.5,
-            background: i <= issue.level ? issue.meterColor : 'rgba(23,33,74,0.09)',
+            background: i <= issue.level ? issue.meterColor : 'rgba(255,255,255,0.14)',
           }}
         />
       ))}

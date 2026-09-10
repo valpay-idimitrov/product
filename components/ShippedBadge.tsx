@@ -19,7 +19,7 @@ export default function ShippedBadge({
         height: size,
         borderRadius: 'var(--radius-pill)',
         background: '#22C55E',
-        border: '2px solid #ffffff',
+        border: '2px solid var(--card-bg)',
         boxSizing: 'border-box',
         animation: 'doneRing 2.6s ease-out infinite',
         ...style,

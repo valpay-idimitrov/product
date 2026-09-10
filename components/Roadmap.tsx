@@ -8,7 +8,7 @@ import { GROUP_ORDER, ITEMS, QUARTER_MONTHS } from '@/lib/data';
 import { deriveItem } from '@/lib/derive';
 
 const MONTHS = QUARTER_MONTHS.length;
-const ACCENT = '#0F705F';
+const ACCENT = '#D9CDF2';
 
 export default function Roadmap() {
   const [cat, setCat] = useState('All');
@@ -49,7 +49,7 @@ export default function Roadmap() {
         overflow: 'hidden',
         fontFamily: 'var(--font-body)',
         color: 'var(--txt)',
-        background: 'linear-gradient(160deg, #FFFFFF 0%, #F0FAF5 65%, #DCEFE7 130%)',
+        background: 'radial-gradient(120% 100% at 15% -10%, #8578B8 0%, #665896 42%, #4C4076 100%)',
       }}
     >
       <RoadmapHeader accent={ACCENT} stats={stats} />

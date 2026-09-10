@@ -278,17 +278,17 @@ export default function TimelineRow({
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: 2,
-                      background: '#ffffff',
-                      boxShadow: 'inset 0 0 0 1px #D6337F',
+                      background: 'rgba(255,255,255,0.08)',
+                      boxShadow: 'inset 0 0 0 1px #FF82BB',
                       fontSize: 7,
                       fontWeight: 800,
                       textTransform: 'uppercase',
                       letterSpacing: 0.2,
-                      color: '#A11A5B',
+                      color: '#FF82BB',
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    <span style={{ width: 4, height: 4, borderRadius: 999, flex: '0 0 auto', background: '#D6337F' }} />
+                    <span style={{ width: 4, height: 4, borderRadius: 999, flex: '0 0 auto', background: '#FF82BB' }} />
                     {item.noteShort}
                   </span>
                 ) : (
@@ -298,7 +298,7 @@ export default function TimelineRow({
                     margin: '0 4px 0 5px',
                     padding: '3px 6px',
                     borderRadius: 3,
-                    background: '#ffffff',
+                    background: 'var(--pill-bg)',
                     boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
                     fontFamily: MONO,
                     fontSize: 8,
@@ -376,17 +376,17 @@ export default function TimelineRow({
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: 2,
-                    background: '#ffffff',
-                    boxShadow: 'inset 0 0 0 1px #D6337F',
+                    background: 'rgba(255,255,255,0.08)',
+                    boxShadow: 'inset 0 0 0 1px #FF82BB',
                     fontSize: 7,
                     fontWeight: 800,
                     textTransform: 'uppercase',
                     letterSpacing: 0.2,
-                    color: '#A11A5B',
+                    color: '#FF82BB',
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  <span style={{ width: 4, height: 4, borderRadius: 999, flex: '0 0 auto', background: '#D6337F' }} />
+                  <span style={{ width: 4, height: 4, borderRadius: 999, flex: '0 0 auto', background: '#FF82BB' }} />
                   {item.noteShort}
                 </span>
               ) : (
@@ -394,7 +394,7 @@ export default function TimelineRow({
                 style={{
                   padding: '3px 6px',
                   borderRadius: 3,
-                  background: '#ffffff',
+                  background: 'var(--pill-bg)',
                   boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
                   fontFamily: MONO,
                   fontSize: 8,

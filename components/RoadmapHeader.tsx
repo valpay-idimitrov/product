@@ -11,21 +11,21 @@ function InternalUsePill() {
     <span
       style={{
         position: 'relative',
-        top: 1,
+        margin: '0 3px',
+        padding: '4px 8px',
+        borderRadius: 3,
         display: 'inline-flex',
         alignItems: 'center',
-        gap: 4,
-        padding: '2px 6px',
-        borderRadius: 3,
-        background: 'rgba(255,255,255,0.08)',
-        boxShadow: 'inset 0 0 0 1px #FF82BB',
-        fontFamily: 'var(--font-mono)',
-        fontSize: 9,
-        fontWeight: 800,
+        gap: 2.5,
+        background: 'var(--note-bg)',
+        boxShadow: 'inset 0 0 0 1px #D6337F',
+        fontSize: 8,
+        fontWeight: 700,
         textTransform: 'uppercase',
-        letterSpacing: 0.3,
-        color: '#FF82BB',
-        animation: 'internalRing 2.1s ease-in-out 1.5s infinite',
+        letterSpacing: 0.15,
+        color: 'var(--note-color)',
+        whiteSpace: 'nowrap',
+        animation: 'internalRing 1.2s ease-in-out infinite',
       }}
     >
       <span
@@ -34,8 +34,7 @@ function InternalUsePill() {
           height: 4,
           borderRadius: 999,
           flex: '0 0 auto',
-          background: '#FF82BB',
-          animation: 'pipPulse 2.1s ease-in-out 1.5s infinite',
+          background: '#D6337F',
         }}
       />
       Internal use only
@@ -54,20 +53,20 @@ export default function RoadmapHeader({ accent, stats }: { accent: string; stats
     <div style={{ padding: '32px 40px 30px', background: headBg }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <img src="/valpay-logo-transparent.webp" alt="ValPay" style={{ height: 24, display: 'block' }} />
-          <span style={{ width: 1.5, height: 14, background: 'var(--txt-faint)', opacity: 0.7 }} />
+          <img src="/valpay-logo-transparent.webp" alt="ValPay" style={{ height: 34, display: 'block' }} />
+          <span style={{ width: 1.5, height: 20, background: 'var(--txt-faint)', opacity: 0.7 }} />
           <span
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 11,
+              fontSize: 16,
               fontWeight: 700,
-              letterSpacing: 0.6,
+              letterSpacing: 0.3,
               color: 'var(--txt)',
             }}
           >
             Q3 Roadmap
           </span>
-          <span style={{ width: 1.5, height: 14, background: 'var(--txt-faint)', opacity: 0.7, marginRight: 4 }} />
+          <span style={{ width: 1.5, height: 20, background: 'var(--txt-faint)', opacity: 0.7, marginRight: 4 }} />
           <InternalUsePill />
         </div>
 

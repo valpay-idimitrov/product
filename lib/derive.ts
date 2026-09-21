@@ -11,7 +11,7 @@ export const textSafe = (areaColor: string) => (areaColor === '#437CC0' ? '#2A5A
 
 /** Lavender-dark theme: brightened equivalents of the light-theme hexes so text/chips stay legible on the dark card. */
 const LIGHTEN_MAP: Record<string, string> = {
-  '#0F705F': '#5BC99A', '#437CC0': '#7EB6EE', '#17214A': '#D2D9EC', '#A11A5B': '#FF82BB',
+  '#0F705F': '#5BC99A', '#437CC0': '#7EB6EE', '#17214A': '#8FA0D9', '#A11A5B': '#FF82BB',
   '#8A5A00': '#F0BE6E', '#2A5A96': '#7EB6EE', '#394962': '#D2D9EC', '#D6337F': '#FF82BB',
   '#E0A43B': '#F0BE6E', '#8A94A6': '#D2D9EC', '#5C6B7F': '#D2D9EC', '#B42318': '#F5897A',
 };
@@ -166,7 +166,7 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     priorityColor: lightenForDark(PRIORITY_COLOR[it.priority] ?? areaColor),
     // Zero-progress items use a muted dark chip instead of the (often pale)
     // lightened area colour, which would otherwise look washed out/grey.
-    barLabelBg: it.progress === 0 ? '#1C1538' : areaTextColor,
+    barLabelBg: '#1C1538',
     groupCode: (it.group ?? '').toUpperCase(),
     groupTier: GROUP_TIER[it.group] ?? 'Later',
     groupTitle: GROUP_TITLE[it.group] ?? `Group ${(it.group ?? '').toUpperCase()}`,

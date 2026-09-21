@@ -46,7 +46,7 @@ export interface Item {
   jira: string;
   area: string;
   priority: string;
-  status: 'shipped' | 'in-progress' | 'planned';
+  status: 'shipped' | 'in-progress' | 'planned' | 'done';
   progress: number;
   prevProgress?: number;
   effort: string;

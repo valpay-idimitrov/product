@@ -69,7 +69,7 @@ export default function TimelineRow({
         }}
         style={{
           display: 'grid',
-          gridTemplateColumns: '406px 1fr',
+          gridTemplateColumns: '300px 1fr',
           columnGap: 32,
           alignItems: 'stretch',
           minHeight: 66,
@@ -86,12 +86,12 @@ export default function TimelineRow({
             flexDirection: 'column',
             justifyContent: 'center',
             gap: 3,
-            padding: '10px 20px 10px 0',
+            padding: '10px 16px 10px 0',
             minWidth: 0,
             borderRight: '1px solid var(--row-border)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 11, minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
             {/* Relative wrapper hosts the shipped badge on the code's corner. */}
             <span style={{ position: 'relative', flex: '0 0 auto', display: 'inline-flex' }}>
               <span
@@ -100,15 +100,15 @@ export default function TimelineRow({
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  width: 26,
-                  height: 16,
+                  width: 22,
+                  height: 14,
                   lineHeight: 1,
                   borderRadius: 2,
                   fontFamily: MONO,
-                  fontSize: 9,
+                  fontSize: 8,
                   fontWeight: 700,
                   textTransform: 'uppercase',
-                  letterSpacing: 0.6,
+                  letterSpacing: 0.4,
                   whiteSpace: 'nowrap',
                   background: item.areaBadge,
                   color: item.areaTextColor,
@@ -126,10 +126,10 @@ export default function TimelineRow({
                 title={item.title}
                 style={{
                   minWidth: 0,
-                  fontSize: 13,
+                  fontSize: 11.5,
                   fontWeight: 600,
-                  lineHeight: '16px',
-                  letterSpacing: -0.15,
+                  lineHeight: '15px',
+                  letterSpacing: -0.1,
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
@@ -155,15 +155,18 @@ export default function TimelineRow({
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 37, minWidth: 0 }}>
-            <span style={{ flex: '0 0 auto', width: 7, height: 7, borderRadius: 2, background: item.areaColor }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 30, minWidth: 0 }}>
             <span
               style={{
-                fontSize: 9.5,
-                lineHeight: '14px',
+                padding: '1px 4px',
+                borderRadius: 2,
+                background: item.areaBadge,
+                fontSize: 6.5,
+                lineHeight: '8px',
+                fontWeight: 500,
+                letterSpacing: 0.2,
                 textTransform: 'uppercase',
-                letterSpacing: 0.6,
-                color: 'var(--txt-faint)',
+                color: item.areaLabelColor,
                 whiteSpace: 'nowrap',
               }}
             >
@@ -171,10 +174,13 @@ export default function TimelineRow({
             </span>
             <span
               style={{
-                fontSize: 9,
-                lineHeight: '14px',
-                fontWeight: 700,
-                letterSpacing: 0.4,
+                padding: '1px 4px',
+                borderRadius: 2,
+                background: item.priorityBadge,
+                fontSize: 6.5,
+                lineHeight: '8px',
+                fontWeight: 500,
+                letterSpacing: 0.2,
                 textTransform: 'uppercase',
                 color: item.priorityColor,
                 whiteSpace: 'nowrap',
@@ -182,7 +188,6 @@ export default function TimelineRow({
             >
               {item.priority}
             </span>
-
           </div>
         </div>
 

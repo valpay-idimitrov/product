@@ -42,7 +42,7 @@ export default function Roadmap() {
   return (
     <div
       style={{
-        width: 1040,
+        width: 1280,
         margin: '0 auto',
         borderRadius: 'var(--radius-lg)',
         boxShadow: 'var(--shadow-lg)',
@@ -68,14 +68,14 @@ export default function Roadmap() {
       </div>
 
       <div style={{ padding: '22px 40px 8px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '406px 1fr', columnGap: 32 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', columnGap: 32 }}>
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              padding: '0 20px 18px 0',
+              padding: '0 16px 18px 0',
               fontFamily: 'var(--font-display)',
-              fontSize: 13,
+              fontSize: 12,
               fontWeight: 600,
               letterSpacing: -0.2,
               color: 'var(--txt-muted)',

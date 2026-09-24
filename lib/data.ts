@@ -1,12 +1,12 @@
 import type { Item } from './types';
 
 /** Area accent colours — ValPay design-system palette. */
-export const AREA_COLORS: Record<string, string> = { 'Reliability': '#0F705F', 'Statements & Tax': '#0F705F', 'White labeling': '#437CC0', 'Onboarding': '#437CC0', 'Payouts': '#17214A', 'Capital': '#17214A', 'Payments': '#17214A', 'Fees': '#062922', 'Currencies': '#062922', 'Partner tools': '#062922' };
+export const AREA_COLORS: Record<string, string> = { 'Reliability': '#0F705F', 'Statements & Tax': '#0F705F', 'White labeling': '#437CC0', 'Onboarding': '#437CC0', 'Payouts': '#17214A', 'Capital': '#17214A', 'Payments': '#17214A', 'Fees': '#062922', 'Currencies': '#062922', 'Partner tools': '#062922', 'Digital Wallets': '#437CC0', 'Notifications': '#0F705F', 'Risk & Fraud': '#062922', 'Access Management': '#437CC0', 'APIs/Integrations': '#17214A', 'Surcharging': '#0F705F' };
 
 export const PRIORITY_COLOR: Record<string, string> = { 'Critical': '#A11A5B', 'Urgent': '#8A5A00', 'High': '#0F705F', 'Medium': '#2A5A96', 'Low': '#394962' };
 
 /** Display order of delivery groups (0 = stabilization, must ship first). */
-export const GROUP_ORDER = ['0', '1a', '1b', '2a', '2b', '2c', '3', '4', '5', '6a', '6b', '6c'];
+export const GROUP_ORDER = ['0', '1a', '1b', '2a', '2b', '2c', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'];
 
 export const GROUP_TIER: Record<string, string> = {
   '0': 'Now', '1a': 'Next', '1b': 'Next', '2a': 'Then', '2b': 'Then', '2c': 'Then',
@@ -19,9 +19,21 @@ export const GROUP_TITLE: Record<string, string> = {
   '2a': 'Group 2a — branding & white-label',
   '2b': 'Group 2b — fees',
   '2c': 'Group 2c — currencies & fee profiles',
+  '3': 'Q4 rank 1a — digital wallets',
+  '4': 'Q4 rank 1b — currencies',
+  '5': 'Q4 rank 2a — onboarding',
+  '6': 'Q4 rank 2b — portal notifications',
+  '7': 'Q4 rank 3 — payout speed options',
+  '8': 'Q4 rank 4 — risk & fraud (VT gating)',
+  '9': 'Q4 rank 5a — access management',
+  '10': 'Q4 rank 5b — risk & fraud (Signzy)',
+  '11': 'Q4 rank 6a — statements & tax',
+  '12': 'Q4 rank 6b — APIs/integrations',
+  '13': 'Q4 rank 7 — surcharging',
+  '14': 'Q4 — automated chargeback defense',
 };
 
-export const QUARTER_MONTHS = ['Jul 2026', 'Aug 2026', 'Sep 2026'];
+export const QUARTER_MONTHS = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 /** Observed delivery throughput used for every projection, in estimate-days per week. */
 export const OBSERVED_RATE = 1.44;
@@ -29,7 +41,7 @@ export const OBSERVED_RATE = 1.44;
 export const ITEMS: Item[] = [
     { id: 'aggstate', title: 'Statements: Aggregate statements (merchant-level)', group: '0', jira: 'VK-2265', area: 'Reliability', priority: 'Urgent', status: 'in-progress', progress: 71, prevProgress: 56, effort: 'ETA 30 Sep', targetDate: 'Target 30 Sep 2026', s: 0, e: 2, bullets: [], subItems: [], groups: [{"name":"Tracked & merged","key":"VK-2390","pct":100,"pctLabel":"100%","meta":"5 issues · 3.0 d · 0.0 left · all merged","status":"","chip":"done","lines":[],"issues":[{"key":"VK-2390","label":"Materialize IVE_STATEMENTS_DASHBOARD into a managed table for API consumption","status":"Done","chip":"done","cx":"Not set"},{"key":"VK-2282","label":"Admin Portal: Statement Contacts (FiServ) — CRUD + move under Statements","status":"Done","chip":"done","cx":"Not set"},{"key":"VK-2277","label":"Admin Portal: Statement Contacts section — Fiserv contacts list/search","status":"Done","chip":"done","cx":"Not set"},{"key":"VK-2257","label":"Gate statement Publish/Unpublish behind publish:statement permission","status":"Done","chip":"done","cx":"Not set"},{"key":"VK-2504","label":"Split multi-currency stores into per-currency statement generation","status":"Done","chip":"done","cx":"Not set"}]},{"name":"Statement generation defects","key":"VK-2467","pct":0,"pctLabel":"0%","meta":"2 issues · multi-currency fix merged · EUR double-count fix + regeneration still To Do","status":"To Do","chip":"planned","lines":[],"issues":[{"key":"VK-2467","label":"Monthly statement generation: multi-currency conflation + EUR 07-28 daily double-count","status":"To Do","chip":"planned","cx":"Not set"},{"key":"VK-2505","label":"Regenerate Kivuto & Lester July 2026 statements after multi-currency fix","status":"To Do","chip":"planned","cx":"Not set"}]}],
       estimates: {"source":"Re-pulled from Jira · 7 tracked tickets (VK-2256/2265 removed) · 5 Done (VK-2390/2282/2277/2257/2504), 2 To Do (VK-2467/2505) · weighted 500/700 = 71%","effort":"71%","effortNote":"VK-2256/2265 (merchant-level aggregation) removed from tracking — was 56%","delivered":"71%","deliveredNote":"5 of 7 tracked tickets merged · EUR double-count fix + regen not started","date":"30 Sep 2026","dateNote":"end of quarter · untracked/defect work has no owner"} },
-        { id: 'capital', title: 'EU/AU/UK Capital with Adyen', group: '1b', jira: 'VP-695', area: 'Capital', priority: 'Urgent', note: 'pending commercials', status: 'planned', progress: 0, effort: 'ETA 30 Sep', targetDate: 'Target 30 Sep 2026', s: 2, e: 2, bullets: [], subItems: [], groups: [{"name":"Epic — EU/AU/UK Capital with Adyen","key":"VP-695","pct":0,"pctLabel":"0%","meta":"1 epic · unsized (stale 4d pre-discovery estimate) · commercials confirmed unblocked 24 Aug · now blocked on Data team availability","status":"Backlog","chip":"planned","lines":[],"issues":[{"key":"VP-695","label":"EU/AU/UK Capital with Adyen (Adyen Capital)","status":"Backlog","chip":"planned","cx":"Not set"}]}],
+        { id: 'capital', title: 'EU/AU/UK Capital with Adyen', group: '1b', jira: 'VP-695', area: 'Capital', priority: 'Urgent', note: 'pending commercials', status: 'planned', progress: 0, effort: 'ETA 30 Sep', targetDate: 'Target 30 Sep 2026', s: 3, e: 3.4, bullets: [], subItems: [], groups: [{"name":"Epic — EU/AU/UK Capital with Adyen","key":"VP-695","pct":0,"pctLabel":"0%","meta":"1 epic · unsized (stale 4d pre-discovery estimate) · commercials confirmed unblocked 24 Aug · now blocked on Data team availability","status":"Backlog","chip":"planned","lines":[],"issues":[{"key":"VP-695","label":"EU/AU/UK Capital with Adyen (Adyen Capital)","status":"Backlog","chip":"planned","cx":"Not set"}]}],
       estimates: {"source":"VP-695 created · commercial terms with Adyen confirmed unblocked (24 Aug) · currently blocked on Data team availability · original 4-day estimate flagged stale, needs re-sizing given added scope (webhooks, AnaCredit/KYC, reconciliation UI, renewal-pilot decision)","effort":"0%","effortNote":"commercials unblocked — blocked on Data team now, was blocked on commercials","delivered":"0%","deliveredNote":"not started · Backlog · assignee May","date":"30 Sep 2026","dateNote":"needs re-sizing — stale 4d estimate","committed":"30 Sep 2026","committedNote":"tech lead · 4 wks rough · pending Data team availability"} },
     { id: 'oxfam', title: 'Oxfam export limit increase', group: '0', jira: 'VK-2266', area: 'Reliability', priority: 'High', status: 'done', progress: 100, prevProgress: 85, effort: 'Shipped', s: 1.871, e: 2, bullets: [], subItems: [],
       groups: [{"name":"Oxfam export limit increase","key":"VK-2266","pct":100,"pctLabel":"100%","meta":"1 issue · unsized, assumed Extreme · Done, Ali Kaakati","status":"Done","chip":"done","lines":[],"issues":[{"key":"VK-2266","label":"Oxfam export limit increase (raise to 50k transactions) — Ali Kaakati","status":"Done","chip":"done","cx":"Not set"}]}],
@@ -78,7 +90,7 @@ export const ITEMS: Item[] = [
     {
       id: 'whitelabel', title: 'Contract branding', group: '2a',
       jira: 'VP-622', area: 'White labeling', priority: 'Critical', status: 'shipped', progress: 100,
-      effort: 'Shipped', targetDate: 'Shipped 14 Aug 2026', s: 0.516, e: 0.42,
+      effort: 'Shipped', targetDate: 'Shipped 14 Aug 2026', s: 0.516, e: 1.42,
       groups: [{"name":"VP-622 · Contract branding — shipped · v1.0.51","key":"VP-622","pct":100,"pctLabel":"100%","meta":"8 issues · all done · released 14 Aug 2026","status":"Done","chip":"done","lines":[],"issues":[{"key":"VP-633","label":"Remove ValPay identity from branded contract legal text & document title","status":"Done","chip":"done","cx":"3 · Normal","release":"v1.0.51"},{"key":"VP-634","label":"Ops: enable contract branding on target brands (prod)","status":"Done","chip":"done","cx":"3 · Normal","release":"v1.0.51"},{"key":"VP-635","label":"Spike: brand logo upload location & decoupling assets from repo/deploy","status":"Done","chip":"done","cx":"4 · Hard","release":""},{"key":"VP-640","label":"Ops: regenerate S3 contract templates for branded brands","status":"Done","chip":"done","cx":"4 · Hard","release":"v1.0.51"},{"key":"VP-641","label":"Data: source & backfill supportPhoneNumber for 6 target brands","status":"Done","chip":"done","cx":"2 · Easy","release":"v1.0.51"},{"key":"VP-642","label":"Discovery: contract jurisdiction for rockofeye_hk","status":"Done","chip":"done","cx":"2 · Easy","release":""},{"key":"VP-644","label":"CA-fr onboarding contract renders hardcoded English strings","status":"Done","chip":"done","cx":"3 · Normal","release":"v1.0.51"},{"key":"VP-657","label":"Branded contract CA-fr error message hardcodes \"ValPay\"","status":"Done","chip":"done","cx":"1 · Trivial","release":"v1.0.51"}]}],
       estimates: {"source":"Complexity field · VP-622 only, 8 issues, 7.2 d · VP-442 and VP-605 excluded","effort":"100%","effortNote":"all 8 issues done","delivered":"100%","deliveredNote":"shipped 14 Aug 2026","date":"Shipped","dateNote":"14 Aug 2026"},
       desc: 'De-ValPay the branded contract — partner identity on the documents merchants sign at onboarding.',
@@ -95,5 +107,83 @@ export const ITEMS: Item[] = [
       desc: 'A full self-service sub-application for partners to manage branding and theming — logos, colours, and more.',
       bullets: [],
       subItems: [],
+    },
+    {
+      id: 'wallets', title: 'Digital Wallets: Apple Pay, Google Pay, Klarna', group: '3', jira: 'VP-706', area: 'Digital Wallets', priority: 'Critical',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 5, bullets: [], subItems: [],
+      groups: [{"name":"Epic — Apple Pay + Google Pay (Phase 1)","key":"VP-706","pct":0,"pctLabel":"0%","meta":"3 child issues · all Backlog","status":"Backlog","chip":"planned","lines":[],"issues":[{"key":"VP-725","label":"Apple Pay onboarding & enablement","status":"Backlog","chip":"planned","cx":"Not set"},{"key":"VP-726","label":"Google Pay onboarding & enablement","status":"Backlog","chip":"planned","cx":"Not set"},{"key":"VP-727","label":"Portal payment-method management UI","status":"Backlog","chip":"planned","cx":"Not set"}]},{"name":"Epic — Klarna / BNPL Onboarding (Phase 2)","key":"VP-792","pct":0,"pctLabel":"0%","meta":"1 epic · Backlog · depends on VP-706/725/726/727","status":"Backlog","chip":"planned","lines":[],"issues":[{"key":"VP-792","label":"Klarna/BNPL onboarding & enablement","status":"Backlog","chip":"planned","cx":"Not set"}]}],
+      desc: 'Wallet checkout at parity with competitors — more completed checkouts, more deals won.',
+      estimates: { source: 'VP-706 (Apple Pay + Google Pay) + VP-792 (Klarna, Phase 2) — both Backlog', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: '4 tracked issues — Apple Pay, Google Pay, Klarna' },
+    },
+    {
+      id: 'dcc', title: 'Currencies: Dynamic Currency Conversion (infra & merchant UI)', group: '4', jira: 'VP-702', area: 'Currencies', priority: 'Critical',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 4, bullets: [], subItems: [],
+      groups: [{"name":"Epic — DCC (Phase 1 – Infra & Merchant UI)","key":"VP-702","pct":0,"pctLabel":"0%","meta":"2 tracked issues · Backlog · Adyen DCC licence per region needs confirming","status":"Backlog","chip":"planned","lines":[],"issues":[{"key":"VP-702","label":"DCC infra + in-person terminal enablement (Phase 1)","status":"Backlog","chip":"planned","cx":"Not set"},{"key":"VP-713","label":"DCC merchant UI companion story","status":"Backlog","chip":"planned","cx":"Not set"}]}],
+      desc: 'New FX margin revenue on cross-border transactions.',
+      estimates: { source: 'VP-702 (infra + in-person terminal, Phase 1) + VP-713 (merchant UI) — both Backlog', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: '2 tracked issues — DCC infra + merchant UI' },
+    },
+    {
+      id: 'fiserv', title: 'Onboarding: Fiserv flow (roomMaster) + geo-location rules', group: '5', jira: '', area: 'Onboarding', priority: 'Critical',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 3, bullets: [], subItems: [], groups: [],
+      desc: 'Unblocks a stalled partner (roomMaster, ~150 clients) pending an external decision.',
+      estimates: { source: 'From Q4 roadmap considerations (Notion) — pending Infinicept decision', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: 'Fiserv onboarding flow, ~150 clients — not yet in Jira' },
+    },
+    {
+      id: 'notifications', title: 'Portal Notifications: outage & payout-failure alerts', group: '6', jira: '', area: 'Notifications', priority: 'High',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 3, bullets: [], subItems: [], groups: [],
+      desc: 'Proactive status alerts so partners hear about issues from us first, not their customers.',
+      estimates: { source: 'From Q4 roadmap considerations (Notion) — not yet broken into Jira tickets', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: 'Outage alerts, payout-failure notices, rate visibility — not yet in Jira' },
+    },
+    {
+      id: 'payoutspeed', title: 'Payout Speed Options: instant/wire payout opt-in', group: '7', jira: 'VP-767', area: 'Payouts', priority: 'Medium',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 4, bullets: [], subItems: [],
+      groups: [{"name":"Epic — Payout Speed Options (Instant / Wire at extra cost)","key":"VP-767","pct":0,"pctLabel":"0%","meta":"2 child issues · Backlog · data contract blocks the billing pipeline","status":"Backlog","chip":"planned","lines":[],"issues":[{"key":"VP-768","label":"Payout speed opt-in: onboarding backend + portal UI","status":"Backlog","chip":"planned","cx":"Not set"},{"key":"VK-2627","label":"Payout fees: statement section (MONTHLY) + outstandingFee collection (DAILY)","status":"Backlog","chip":"planned","cx":"Not set"}]}],
+      desc: 'New recurring revenue line — premium fee for faster payout access.',
+      estimates: { source: 'VP-767 epic + VP-768, VK-2627 — all Backlog', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: '3 tracked issues — onboarding backend + portal UI' },
+    },
+    {
+      id: 'vtgating', title: 'Risk & Fraud: Virtual Terminal permission gating', group: '8', jira: 'VP-786', area: 'Risk & Fraud', priority: 'Critical',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 3, bullets: [], subItems: [],
+      groups: [{"name":"Epic — VT permission gating (Risk team only)","key":"VP-786","pct":0,"pctLabel":"0%","meta":"P0 · Backlog · direct response to Rentworks $100K fraud incident","status":"Backlog","chip":"planned","lines":[],"issues":[{"key":"VP-786","label":"Risk-only VT permission gating + immutable audit log","status":"Backlog","chip":"planned","cx":"Not set"}]}],
+      desc: 'Risk-team-only enable/disable — direct response to a $100K fraud incident.',
+      estimates: { source: 'VP-786 — Backlog', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: '1 tracked issue — closes real exposure from Rentworks incident' },
+    },
+    {
+      id: 'mfa', title: 'Access Management: 2FA / MFA for portal access', group: '9', jira: '', area: 'Access Management', priority: 'Critical',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 3, bullets: [], subItems: [], groups: [],
+      desc: 'Baseline security — reduces account-takeover risk portal-wide.',
+      estimates: { source: 'From Q4 roadmap considerations (Notion) — not yet broken into Jira tickets', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: '2FA/MFA for portal access — not yet in Jira' },
+    },
+    {
+      id: 'signzy', title: 'Risk & Fraud: Signzy fraud mitigation (POC)', group: '10', jira: 'VP-795', area: 'Risk & Fraud', priority: 'High',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 3, note: 'needs scoping', bullets: [], subItems: [],
+      groups: [{"name":"Epic — Signzy fraud mitigation (POC)","key":"VP-795","pct":0,"pctLabel":"0%","meta":"1 epic · Backlog · needs scoping with Meagan before commit","status":"Backlog","chip":"planned","lines":[],"issues":[{"key":"VP-795","label":"Signzy fraud-detection POC","status":"Backlog","chip":"planned","cx":"Not set"}]}],
+      desc: 'Adds a fraud-detection layer alongside VT gating.',
+      estimates: { source: 'VP-795 — Backlog, needs scoping with Risk team', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: '1 tracked issue — Signzy fraud mitigation POC' },
+    },
+    {
+      id: 'vat', title: 'Statements: Tax Engine & VAT accuracy', group: '11', jira: '', area: 'Statements & Tax', priority: 'High',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 3, bullets: [], subItems: [], groups: [],
+      desc: 'Compliance-critical VAT accuracy on tax reporting.',
+      estimates: { source: 'From Q4 roadmap considerations (Notion) — statements handover from Tarek pending', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: 'Bottom of Q4 — not yet in Jira' },
+    },
+    {
+      id: 'aperia', title: 'APIs / Integrations: Aperia integration', group: '12', jira: '', area: 'APIs/Integrations', priority: 'Critical',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 3, bullets: [], subItems: [], groups: [],
+      desc: 'New partner integration.',
+      estimates: { source: 'From Q4 roadmap considerations (Notion) — not yet broken into Jira tickets', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: 'Aperia integration — not yet in Jira' },
+    },
+    {
+      id: 'surcharge', title: 'Surcharging: self-serve fee control from portal', group: '13', jira: 'VP-707', area: 'Surcharging', priority: 'Critical',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 4, bullets: [], subItems: [],
+      groups: [{"name":"Epic — Control surcharging from portal","key":"VP-707","pct":0,"pctLabel":"0%","meta":"3 tracked issues · all Backlog","status":"Backlog","chip":"planned","lines":[],"issues":[{"key":"VP-707","label":"Surcharging core","status":"Backlog","chip":"planned","cx":"Not set"},{"key":"VP-728","label":"Surcharging UI","status":"Backlog","chip":"planned","cx":"Not set"},{"key":"VP-729","label":"Surcharging rollout","status":"Backlog","chip":"planned","cx":"Not set"}]}],
+      desc: 'Self-serve surcharge control for merchants — less support load, better margin perception.',
+      estimates: { source: 'VP-707, VP-728, VP-729 — Backlog', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: '3 tracked issues — control surcharging from portal' },
+    },
+    {
+      id: 'chargeback', title: 'Payments: Automated chargeback defense', group: '14', jira: '', area: 'Payments', priority: 'Medium',
+      status: 'planned', progress: 0, effort: 'Pending', targetDate: 'ETA pending', s: 3, e: 3, note: 'needs scoping', bullets: [], subItems: [], groups: [],
+      desc: 'Automates dispute defense submissions — less manual handling per chargeback.',
+      estimates: { source: 'From Q4 roadmap considerations (Notion) — Kenneth request, needs scoping, not yet broken into Jira tickets', effort: '0%', effortNote: 'Planned for Q4 — not started', delivered: '0%', deliveredNote: 'Not started', date: 'ETA pending', dateNote: 'Automated chargeback defense — not yet in Jira' },
     },
   ];

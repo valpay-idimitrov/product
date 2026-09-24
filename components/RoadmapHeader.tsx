@@ -64,7 +64,7 @@ export default function RoadmapHeader({ accent, stats }: { accent: string; stats
               color: 'var(--txt)',
             }}
           >
-            Q3 Roadmap
+            Roadmap
           </span>
           <span style={{ width: 1.5, height: 20, background: 'var(--txt-faint)', opacity: 0.7, marginRight: 4 }} />
           <InternalUsePill />
@@ -95,7 +95,7 @@ export default function RoadmapHeader({ accent, stats }: { accent: string; stats
                 color: 'var(--txt-muted)',
               }}
             >
-              Q3 2026 delivery
+              Q3–Q4 2026 delivery
             </div>
             <div
               style={{

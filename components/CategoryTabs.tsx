@@ -1,4 +1,5 @@
 import { AREA_COLORS } from '@/lib/data';
+import { lightenForDark } from '@/lib/derive';
 import type { Item } from '@/lib/types';
 
 export default function CategoryTabs({
@@ -15,9 +16,9 @@ export default function CategoryTabs({
   const names = ['All', ...Object.keys(AREA_COLORS).filter((a) => items.some((it) => it.area === a))];
 
   return (
-    <div style={{ display: 'flex', alignItems: 'stretch', gap: 8, flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', alignItems: 'stretch', gap: '6px 8px', flexWrap: 'wrap' }}>
       {names.map((name) => {
-        const color = name === 'All' ? accent : AREA_COLORS[name];
+        const color = lightenForDark(name === 'All' ? accent : AREA_COLORS[name]);
         const on = name === active;
         const count = name === 'All' ? items.length : items.filter((it) => it.area === name).length;
         return (
@@ -27,15 +28,15 @@ export default function CategoryTabs({
             title={name}
             style={{
               position: 'relative',
-              flex: '1 0 auto',
+              flex: '0 0 auto',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: 6,
+              gap: 4,
               fontFamily: 'var(--font-body)',
-              fontSize: 11,
+              fontSize: 10,
               letterSpacing: -0.1,
-              padding: '8px 14px',
+              padding: '6px 9px',
               border: '1px solid',
               borderRadius: 999,
               cursor: 'pointer',
@@ -46,14 +47,14 @@ export default function CategoryTabs({
                 : { background: 'rgba(255,255,255,0.04)', color: '#FFFFFF', borderColor: 'rgba(255,255,255,0.12)', fontWeight: 500 }),
             }}
           >
-            <span style={{ width: 7, height: 7, borderRadius: 2, flex: '0 0 auto', background: color }} />
+            <span style={{ width: 6, height: 6, borderRadius: 2, flex: '0 0 auto', background: color }} />
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
             <span
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: 9,
+                fontSize: 8.5,
                 fontWeight: 700,
-                padding: '1px 5px',
+                padding: '1px 4px',
                 borderRadius: 3,
                 transition: 'all .2s cubic-bezier(.22,1,.36,1)',
                 ...(on

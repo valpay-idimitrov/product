@@ -14,6 +14,7 @@ const LIGHTEN_MAP: Record<string, string> = {
   '#0F705F': '#5BC99A', '#437CC0': '#7EB6EE', '#17214A': '#8FA0D9', '#A11A5B': '#FF82BB',
   '#8A5A00': '#F0BE6E', '#2A5A96': '#7EB6EE', '#394962': '#D2D9EC', '#D6337F': '#FF82BB',
   '#E0A43B': '#F0BE6E', '#8A94A6': '#D2D9EC', '#5C6B7F': '#D2D9EC', '#B42318': '#F5897A',
+  '#062922': '#6BC49F',
 };
 export const lightenForDark = (hex: string) => LIGHTEN_MAP[hex] ?? hex;
 
@@ -113,6 +114,8 @@ export interface DerivedItem extends Item {
   /** Positions the external label group left or right of the bar. */
   labelSide: React.CSSProperties;
   priorityColor: string;
+  priorityBadge: string;
+  areaLabelColor: string;
   barLabelBg: string;
   groupCode: string;
   groupTier: string;
@@ -164,6 +167,8 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     areaDash: hexRgba(areaBright, 0.38),
     areaGrad: `linear-gradient(90deg, ${areaBright}, color-mix(in srgb, ${areaBright} 80%, #ffffff))`,
     priorityColor: lightenForDark(PRIORITY_COLOR[it.priority] ?? areaColor),
+    priorityBadge: hexRgba(lightenForDark(PRIORITY_COLOR[it.priority] ?? areaColor), 0.2),
+    areaLabelColor: '#E4DCF5',
     // Zero-progress items use a muted dark chip instead of the (often pale)
     // lightened area colour, which would otherwise look washed out/grey.
     barLabelBg: '#1C1538',
@@ -177,7 +182,7 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     barRight: `calc(${left + width}% - 7px)`,
     // Note pills render inside the bar regardless of width (board treatment);
     // otherwise fall back to the width-based threshold.
-    narrowBar: it.note ? false : Math.round((width / 100) * 590) - 9 < 130,
+    narrowBar: it.note ? false : Math.round((width / 100) * 868) - 9 < 130,
     labelSide:
       it.note
         ? { left: `calc(${left}% + 2px)` }

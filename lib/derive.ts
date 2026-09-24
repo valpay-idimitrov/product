@@ -182,7 +182,7 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     barRight: `calc(${left + width}% - 7px)`,
     // Note pills render inside the bar regardless of width (board treatment);
     // otherwise fall back to the width-based threshold.
-    narrowBar: it.note ? false : Math.round((width / 100) * 868) - 9 < 130,
+    narrowBar: it.id === 'p7d1' ? false : it.note ? false : Math.round((width / 100) * 868) - 9 < 130,
     labelSide:
       it.note
         ? { left: `calc(${left}% + 2px)` }

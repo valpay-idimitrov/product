@@ -22,7 +22,9 @@ export default function Roadmap() {
       (a, b) => GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group),
     );
     const visible = cat === 'All' ? sorted : sorted.filter((it) => it.area === cat);
-    return visible.map((it) => deriveItem(it, MONTHS));
+    const q3Groups = ['0', '1a', '1b', '2a', '2b', '2c'];
+    const firstQ4Idx = visible.findIndex((it) => !q3Groups.includes(it.group));
+    return visible.map((it, i) => ({ ...deriveItem(it, MONTHS), q4Banner: i === firstQ4Idx }));
   }, [cat]);
 
   const stats: HeaderStats = useMemo(() => {
@@ -111,16 +113,43 @@ export default function Roadmap() {
 
       <div style={{ padding: '0 40px 36px' }}>
         {rows.map((item, i) => (
-          <TimelineRow
-            key={item.id}
-            item={item}
-            months={MONTHS}
-            expanded={expandedId === item.id}
-            dimmed={expandedId !== null && expandedId !== item.id}
-            delay={i * 34}
-            animName={animTick % 2 ? 'rowInB' : 'rowIn'}
-            onToggle={() => setExpandedId((cur) => (cur === item.id ? null : item.id))}
-          />
+          <div key={item.id}>
+            {item.q4Banner && (
+              <div style={{ padding: '18px 0 18px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 8,
+                    width: '100%',
+                    padding: '9px 14px',
+                    borderRadius: 10,
+                    background: `color-mix(in srgb, ${ACCENT} 22%, transparent)`,
+                    boxShadow: `inset 0 0 0 1.5px ${ACCENT}`,
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: 11,
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: 0.6,
+                    color: 'var(--txt)',
+                  }}
+                >
+                  <span style={{ width: 7, height: 7, borderRadius: 999, flex: '0 0 auto', background: ACCENT }} />
+                  Q4 initiatives are still in planning — dates and scope may change
+                </div>
+              </div>
+            )}
+            <TimelineRow
+              item={item}
+              months={MONTHS}
+              expanded={expandedId === item.id}
+              dimmed={expandedId !== null && expandedId !== item.id}
+              delay={i * 34}
+              animName={animTick % 2 ? 'rowInB' : 'rowIn'}
+              onToggle={() => setExpandedId((cur) => (cur === item.id ? null : item.id))}
+            />
+          </div>
         ))}
       </div>
     </div>

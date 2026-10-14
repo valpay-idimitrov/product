@@ -216,8 +216,9 @@ export default function TimelineRow({
               height: 24,
               left: item.barLeft,
               width: item.barWidth,
-              // Floor so a one-week span stays legible; does not shift any date.
-              minWidth: 62,
+              // Floor so a one-week span stays legible, and guarantees room
+              // for the inline chips regardless of how short the date span is.
+              minWidth: item.minWidth,
               borderRadius: 4,
               overflow: 'hidden',
               zIndex: 1,
@@ -258,13 +259,13 @@ export default function TimelineRow({
                 <span
                   style={{
                     position: 'relative',
-                    margin: '0 4px',
-                    padding: '2px 7px',
+                    margin: '0 1px 0 6px',
+                    padding: '2px 4px 2px 2px',
                     borderRadius: 3,
                     fontFamily: MONO,
-                    fontSize: 10,
+                    fontSize: 9,
                     fontWeight: 700,
-                    letterSpacing: 0.3,
+                    letterSpacing: 0.2,
                     whiteSpace: 'nowrap',
                     color: '#fff',
                     background: item.barLabelBg,
@@ -300,8 +301,8 @@ export default function TimelineRow({
                 <span
                   style={{
                     position: 'relative',
-                    margin: '0 4px 0 5px',
-                    padding: '3px 6px',
+                    margin: '0 6px 0 0',
+                    padding: '2px 6px 2px 4px',
                     borderRadius: 3,
                     background: 'var(--pill-bg)',
                     boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
@@ -309,7 +310,7 @@ export default function TimelineRow({
                     fontSize: 8,
                     fontWeight: 700,
                     textTransform: 'uppercase',
-                    letterSpacing: 0.3,
+                    letterSpacing: 0.2,
                     whiteSpace: 'nowrap',
                     color: item.areaTextColor,
                   }}
@@ -416,15 +417,19 @@ export default function TimelineRow({
           )}
 
           {item.showCheck && (
+            // Perched at the bar's top-right corner, matching barRight's
+            // minWidth-aware value so it sits on the real rendered edge.
             <ShippedBadge
               size={16}
               stroke={2.2}
               style={{
                 position: 'absolute',
-                top: 'calc(50% - 19px)',
+                top: 'calc(50% - 20px)',
                 left: item.barRight,
                 transform: 'translateX(-50%)',
                 zIndex: 4,
+                display: 'inline-flex',
+                lineHeight: 0,
               }}
             />
           )}

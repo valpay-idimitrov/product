@@ -111,6 +111,8 @@ export interface DerivedItem extends Item {
   barRight: string;
   /** True when the bar is too narrow to hold its two chips. */
   narrowBar: boolean;
+  /** CSS minWidth (px) floor so the bar always has room for its inline chips. */
+  minWidth: number;
   /** Positions the external label group left or right of the bar. */
   labelSide: React.CSSProperties;
   priorityColor: string;
@@ -179,10 +181,12 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     // a bar starting at the grid edge sits flush instead.
     barLeft: left === 0 ? '0%' : `calc(${left}% + 2px)`,
     barWidth: left === 0 ? `calc(${width}% - 7px)` : `calc(${width}% - 9px)`,
-    barRight: `calc(${left + width}% - 7px)`,
-    // Note pills render inside the bar regardless of width (board treatment);
-    // otherwise fall back to the width-based threshold.
-    narrowBar: it.id === 'p7d1' ? false : it.note ? false : Math.round((width / 100) * 868) - 9 < 130,
+    // minWidth is a CSS floor (not just a formula estimate) so every bar — no
+    // matter how short its date span — always has room for its inline chips.
+    minWidth: it.progress >= 100 ? 115 : it.note ? 230 : 100,
+    barRight: `calc(${left === 0 ? '0%' : `${left}% + 2px`} + max(${left === 0 ? `${width}% - 7px` : `${width}% - 9px`}, ${it.progress >= 100 ? 115 : it.note ? 230 : 100}px))`,
+    // Every bar renders its chips inline now; minWidth guarantees the fit.
+    narrowBar: false,
     labelSide:
       it.note
         ? { left: `calc(${left}% + 2px)` }
@@ -193,15 +197,13 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     deliveredPct: `${est ? parseFloat(est.delivered) || 0 : 0}%`,
     jiraUrl: `https://valpay.atlassian.net/browse/${it.jira}`,
     showCheck: it.progress >= 100,
-    // Custom Domains bar shows more visual fill than its 8% chip — a deliberate
-    // divergence from the user, not a bug; keep the two in sync here.
-    fillPct: it.id === 'domains' ? 20 : it.progress,
+    fillPct: it.progress,
     dateLabel:
-      it.id === 'domains' || it.id === 'p7d1'
-        ? 'ETA 30 Sep'
+      it.progress >= 100
+        ? 'Shipped'
         : (() => {
-            const raw = (est?.committed ?? it.effort ?? '').replace(/\s*20\d\d\b/, '');
-            return raw === 'Shipped' || !raw ? raw : `ETA ${raw.replace(/^ETA\s*/i, '')}`;
+            const raw = (est?.committed ?? '').replace(/\s*20\d\d\b/, '');
+            return raw ? `ETA ${raw.replace(/^ETA\s*/i, '')}` : 'Pending';
           })(),
     projLabel: est ? (est.committed ? 'Committed' : 'Projected') : '',
     projDate: est ? est.committed ?? est.date : '',

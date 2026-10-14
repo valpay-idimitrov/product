@@ -29,11 +29,36 @@ export interface Estimates {
   effortNote: string;
   delivered: string;
   deliveredNote: string;
-  date: string;
-  dateNote: string;
+  date?: string;
+  dateNote?: string;
   committed?: string;
   committedNote?: string;
   basis?: string;
 }
 
 export interface Bullet { t: string; d: string }
+
+export interface Item {
+  id: string;
+  title: string;
+  titleNote?: string;
+  group: string;
+  jira: string;
+  area: string;
+  priority: string;
+  status: 'shipped' | 'in-progress' | 'planned' | 'done';
+  progress: number;
+  prevProgress?: number;
+  effort: string;
+  targetDate?: string;
+  /** Timeline span in month units across the quarter: 0 = Jul, 1 = Aug, 2 = Sep. */
+  s: number;
+  e: number;
+  note?: string;
+  desc?: string;
+  context?: string;
+  bullets: Bullet[];
+  subItems: unknown[];
+  groups?: Group[];
+  estimates?: Estimates;
+}

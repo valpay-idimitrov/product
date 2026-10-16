@@ -1,5 +1,14 @@
 # Notes for the design pass
 
+> Re-synced from the design-review pass (latest): lib/data.ts now has all 21 items with
+> the current Jira-pulled epics/progress and Q4 rank list (incl. new "Job Worker: scaling
+> & reliability" at group 5b, above Notification System) and updated start/end dates.
+> derive.ts/TimelineRow.tsx were updated to the final overflow fix: every bar now anchors
+> via CSS `right` (barRightAnchor, derived from its natural left+width end position)
+> instead of `left`, so a minWidth floor always grows the box leftward and can never push
+> it past the track's right edge — no JS pixel/track-width estimate needed.
+
+
 > Synced from the design-review pass: lib/data.ts now reflects the live roadmap edits
 > (full Q3 set minus the retired "Capital with Adyen" Q3 row, and the current 12-item
 > Q4 priority list — Adyen Capital, Fiserv onboarding, DCC, Notification system,

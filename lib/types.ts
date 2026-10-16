@@ -12,12 +12,12 @@ export interface Issue {
 export interface Group {
   name: string;
   key: string;
-  pct?: number;
-  pctLabel?: string;
+  pct: number;
+  pctLabel: string;
   meta: string;
-  status?: string;
+  status: string;
   chip: Chip;
-  lines?: string[];
+  lines: string[];
   issues: Issue[];
   countOverride?: string;
   hasSpine?: boolean;
@@ -29,8 +29,8 @@ export interface Estimates {
   effortNote: string;
   delivered: string;
   deliveredNote: string;
-  date?: string;
-  dateNote?: string;
+  date: string;
+  dateNote: string;
   committed?: string;
   committedNote?: string;
   basis?: string;

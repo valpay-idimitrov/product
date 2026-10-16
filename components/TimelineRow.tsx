@@ -214,10 +214,12 @@ export default function TimelineRow({
               position: 'absolute',
               top: 'calc(50% - 12px)',
               height: 24,
-              left: item.barLeft,
+              right: item.barRightAnchor,
               width: item.barWidth,
               // Floor so a one-week span stays legible, and guarantees room
               // for the inline chips regardless of how short the date span is.
+              // Anchored via `right` (not `left`) so the floor grows the box
+              // leftward instead of overflowing the track's right edge.
               minWidth: item.minWidth,
               borderRadius: 4,
               overflow: 'hidden',

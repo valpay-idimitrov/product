@@ -109,6 +109,7 @@ export interface DerivedItem extends Item {
   areaDash: string;
   areaGrad: string;
   barRight: string;
+  barRightAnchor: string;
   /** True when the bar is too narrow to hold its two chips. */
   narrowBar: boolean;
   /** CSS minWidth (px) floor so the bar always has room for its inline chips. */
@@ -184,7 +185,14 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     // minWidth is a CSS floor (not just a formula estimate) so every bar — no
     // matter how short its date span — always has room for its inline chips.
     minWidth: it.progress >= 100 ? 115 : it.note ? 230 : 100,
-    barRight: `calc(${left === 0 ? '0%' : `${left}% + 2px`} + max(${left === 0 ? `${width}% - 7px` : `${width}% - 9px`}, ${it.progress >= 100 ? 115 : it.note ? 230 : 100}px))`,
+    // Every bar is anchored via CSS `right` at its natural end position
+    // (left+width, same -7px inset used elsewhere) instead of `left`. This
+    // way the browser resolves left from right+width+minWidth, so the floor
+    // grows the box leftward when it exceeds the natural width, rather than
+    // a left-anchored box overflowing the track's right edge. No JS
+    // px/track-width estimate needed — it's correct for every span.
+    barRightAnchor: `calc(${100 - (left + width)}% + 7px)`,
+    barRight: `calc(${left + width}% - 7px)`,
     // Every bar renders its chips inline now; minWidth guarantees the fit.
     narrowBar: false,
     labelSide:
@@ -206,8 +214,8 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
             return raw ? `ETA ${raw.replace(/^ETA\s*/i, '')}` : 'Pending';
           })(),
     projLabel: est ? (est.committed ? 'Committed' : 'Projected') : '',
-    projDate: est ? est.committed ?? est.date ?? '' : '',
-    projNote: est ? est.committedNote ?? est.dateNote ?? '' : '',
+    projDate: est ? est.committed ?? est.date : '',
+    projNote: est ? est.committedNote ?? est.dateNote : '',
     noteShort: it.note === 'blocked by Adyen API' ? 'Blocked by Adyen' : it.note === 'pending commercials' ? 'Pending commercials' : it.note ?? '',
     hasDelta: it.prevProgress != null && it.prevProgress !== it.progress,
     deltaLabel: it.prevProgress != null ? `${it.progress - it.prevProgress > 0 ? '+' : ''}${it.progress - it.prevProgress}%` : '',

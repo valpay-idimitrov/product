@@ -29,8 +29,8 @@ export interface Estimates {
   effortNote: string;
   delivered: string;
   deliveredNote: string;
-  date: string;
-  dateNote: string;
+  date?: string;
+  dateNote?: string;
   committed?: string;
   committedNote?: string;
   basis?: string;

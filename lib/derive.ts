@@ -214,8 +214,8 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
             return raw ? `ETA ${raw.replace(/^ETA\s*/i, '')}` : 'Pending';
           })(),
     projLabel: est ? (est.committed ? 'Committed' : 'Projected') : '',
-    projDate: est ? est.committed ?? est.date : '',
-    projNote: est ? est.committedNote ?? est.dateNote : '',
+    projDate: est ? (est.committed ?? est.date ?? '') : '',
+    projNote: est ? (est.committedNote ?? est.dateNote ?? '') : '',
     noteShort: it.note === 'blocked by Adyen API' ? 'Blocked by Adyen' : it.note === 'pending commercials' ? 'Pending commercials' : it.note ?? '',
     hasDelta: it.prevProgress != null && it.prevProgress !== it.progress,
     deltaLabel: it.prevProgress != null ? `${it.progress - it.prevProgress > 0 ? '+' : ''}${it.progress - it.prevProgress}%` : '',

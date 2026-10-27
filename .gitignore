@@ -1,9 +1,8 @@
 node_modules
 .next
 out
+build
+*.log
 .env*.local
-*.tsbuildinfo
-next-env.d.ts
 .DS_Store
-
-roadmap/
+next-env.d.ts

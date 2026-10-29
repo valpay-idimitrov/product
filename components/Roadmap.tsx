@@ -136,7 +136,7 @@ export default function Roadmap() {
                   }}
                 >
                   <span style={{ width: 7, height: 7, borderRadius: 999, flex: '0 0 auto', background: ACCENT }} />
-                  Q4 initiatives are still in planning — dates and scope may change
+                  Q4 initiatives
                 </div>
               </div>
             )}

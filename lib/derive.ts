@@ -184,7 +184,7 @@ export const deriveItem = (it: Item, months = 3): DerivedItem => {
     barWidth: left === 0 ? `calc(${width}% - 7px)` : `calc(${width}% - 9px)`,
     // minWidth is a CSS floor (not just a formula estimate) so every bar — no
     // matter how short its date span — always has room for its inline chips.
-    minWidth: it.progress >= 100 ? 115 : it.note ? 230 : 100,
+    minWidth: it.progress >= 100 ? 115 : it.note ? Math.min(230, 58 + it.note.length * 4.6) : 100,
     // Every bar is anchored via CSS `right` at its natural end position
     // (left+width, same -7px inset used elsewhere) instead of `left`. This
     // way the browser resolves left from right+width+minWidth, so the floor

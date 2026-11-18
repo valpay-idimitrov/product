@@ -209,7 +209,6 @@ export default function TimelineRow({
           ))}
 
           <div
-            title={item.desc}
             style={{
               position: 'absolute',
               top: 'calc(50% - 12px)',
@@ -221,16 +220,47 @@ export default function TimelineRow({
               // Anchored via `right` (not `left`) so the floor grows the box
               // leftward instead of overflowing the track's right edge.
               minWidth: item.minWidth,
-              borderRadius: 4,
-              overflow: 'hidden',
-              zIndex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              background: item.areaSoft,
-              boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
             }}
           >
+            {item.hasDelta && (
+              <span
+                title="Since last update"
+                style={{
+                  position: 'absolute',
+                  top: -16,
+                  left: 0,
+                  zIndex: 3,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 4,
+                  fontFamily: MONO,
+                  fontSize: 10,
+                  fontWeight: 800,
+                  whiteSpace: 'nowrap',
+                  color: item.deltaColor,
+                }}
+              >
+                <span style={{ fontSize: 9 }}>{item.deltaArrow}</span>
+                {item.deltaLabel}
+                <span style={{ fontWeight: 500, opacity: 0.75, marginLeft: 4 }}>since last update</span>
+              </span>
+            )}
+            <div
+              title={item.desc}
+              style={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                borderRadius: 4,
+                overflow: 'hidden',
+                zIndex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                background: item.areaSoft,
+                boxShadow: `inset 0 0 0 1px ${item.areaHover}`,
+              }}
+            >
             {/* Single gradient fill with a slow shimmer sweep over it. */}
             <div
               style={{
@@ -322,31 +352,8 @@ export default function TimelineRow({
                 )}
               </>
             )}
+            </div>
           </div>
-
-          {item.hasDelta && (
-            <span
-              title="Since last update"
-              style={{
-                position: 'absolute',
-                top: 2,
-                left: item.barLeft,
-                zIndex: 3,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 4,
-                fontFamily: MONO,
-                fontSize: 10,
-                fontWeight: 800,
-                whiteSpace: 'nowrap',
-                color: item.deltaColor,
-              }}
-            >
-              <span style={{ fontSize: 9 }}>{item.deltaArrow}</span>
-              {item.deltaLabel}
-              <span style={{ fontWeight: 500, opacity: 0.75, marginLeft: 4 }}>since last update</span>
-            </span>
-          )}
 
           {item.narrowBar && (
             <span
